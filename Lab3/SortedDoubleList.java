@@ -14,7 +14,6 @@ public class SortedDoubleList<T extends Comparable<T>> {
     public SortedDoubleList() {
         head = new DoubleNode(0);
         tail = new DoubleNode(0);
-        int count = 2;
         size = 0;
         head.next = tail;
         head.previous = null;
@@ -119,8 +118,7 @@ public class SortedDoubleList<T extends Comparable<T>> {
                 newNode.next = current.next;
                 newNode.previous = current;
                 current.next = newNode;
-                if (current.next != null)
-                    newNode.next.previous = newNode;
+                newNode.next.previous = newNode;
 
             }
         }

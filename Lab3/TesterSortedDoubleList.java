@@ -1,8 +1,8 @@
 public class TesterSortedDoubleList {
     public static void main(String[] args) {
         //initialize lists
-        SortedDoubleList strList = new SortedDoubleList<String>();
-        SortedDoubleList intList = new SortedDoubleList<Integer>();
+        SortedDoubleList<String> strList = new SortedDoubleList<>();
+        SortedDoubleList<Integer> intList = new SortedDoubleList<>();
         int[] ints = {5, 2, 3, 6, 45, 8, 4, 60, 4, 5, 500, 7, 45785, 658};
         for (int item : ints) {
             intList.insert(item);
@@ -62,7 +62,7 @@ public class TesterSortedDoubleList {
      * @param intList Integer List.
      * @param strList String List.
      */
-    public static void printLists(SortedDoubleList<String> intList, SortedDoubleList<Integer> strList) {
+    public static void printLists(SortedDoubleList<Integer> intList, SortedDoubleList<String> strList) {
         System.out.println(intList.toString());
         System.out.println(strList.toString());
     }
