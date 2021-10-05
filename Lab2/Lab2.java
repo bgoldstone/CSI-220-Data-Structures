@@ -46,11 +46,21 @@ public class Lab2 {
 				intList.insertLast(i);
 			}
 		}
-		testMethod(intList);
+		LinkedList<String> strList = new LinkedList<String>();
+		strList.insertLast("Hello");
+		strList.insertLast("World!");
+		strList.insertLast("I am here");
+		for (int i = 0; i < 10; i++) {
+			strList.insertLast("Hello");
+			strList.insertLast("World!");
+		}
+		strList.insertLast("Hello?");
+		testMethodInt(intList);
+		testMethodStr(strList);
 
 	}
 
-	public static void testMethod(LinkedList<Integer> intList) {
+	public static void testMethodInt(LinkedList<Integer> intList) {
 		System.out.println(intList.toString());
 		System.out.println("InsertFirst");
 		intList.insertFirst(2);
@@ -105,6 +115,63 @@ public class Lab2 {
 		System.out.println(intList.UpdateAll(-1, 0));
 		System.out.println(intList.UpdateAll(2, 3));
 		System.out.println(intList.toString());
+	}
+
+	public static void testMethodStr(LinkedList<String> strList) {
+		System.out.println(strList.toString());
+		System.out.println("InsertFirst");
+		strList.insertFirst("Hello");
+		strList.insertFirst("World");
+		System.out.println(strList.toString());
+		System.out.println("InsertLast");
+		strList.insertLast("End");
+		strList.insertLast("List");
+		System.out.println(strList.toString());
+		System.out.println("InsertIndex");
+		strList.insertIndex("Inserting", 1);
+		System.out.println(strList.toString());
+		strList.insertIndex("Next", 2);
+		System.out.println(strList.toString());
+		strList.insertIndex("Middle", 3);
+		System.out.println(strList.toString());
+		strList.insertIndex("Last", 4);
+		System.out.println(strList.toString());
+		System.out.println("RemoveFirst");
+		strList.removeFirst();
+		strList.removeFirst();
+		System.out.println(strList.toString());
+		System.out.println("RemoveLast");
+		strList.removeLast();
+		strList.removeLast();
+		System.out.println(strList.toString());
+		System.out.println("RemoveIndex");
+		strList.removeIndex(2);
+		System.out.println(strList.toString());
+		strList.removeIndex(3);
+		System.out.println(strList.toString());
+		System.out.println("SearchByValue");
+		System.out.println(strList.searchByValue("Hello"));
+		System.out.println(strList.searchByValue("World"));
+		System.out.println("SearchByIndex");
+		System.out.println(strList.searchByIndex(3));
+		System.out.println(strList.searchByIndex(23));
+		System.out.println(strList.searchByIndex(0));
+		System.out.println(strList.searchByIndex(500));
+		System.out.println("Update");
+		System.out.println(strList.Update(1, "Update"));
+		System.out.println(strList.toString());
+		System.out.println(strList.Update(5, "Update"));
+		System.out.println(strList.Update(-1, "Update"));
+		System.out.println(strList.Update(500, "Update"));
+		System.out.println(strList.toString());
+		System.out.println("UpdateAllw/Times");
+		System.out.println(strList.UpdateAll("Hello", "NewUpdate", 3));
+		System.out.println(strList.UpdateAll("World", "UpdateNow", 2));
+		System.out.println(strList.toString());
+		System.out.println("UpdateAll");
+		System.out.println(strList.UpdateAll("Hello", "Next"));
+		System.out.println(strList.UpdateAll("World!", "Nodes"));
+		System.out.println(strList.toString());
 	}
 
 }
@@ -228,7 +295,7 @@ class LinkedList<T> {
 		// Iterates through the List
 		while (pos.next != null) {
 			// If the value is correct, return the index
-			if (pos.val == val)
+			if (pos.val.equals(val))
 				return i;
 			// else "increment the index"
 			else {
@@ -241,17 +308,17 @@ class LinkedList<T> {
 		return -1;
 	}
 
-	public int searchByIndex(int idx) {
+	public T searchByIndex(int idx) {
 		Node pos = header;
 		int i = 1;
 		while (pos.next != null) {
 			if (i == idx)
-				return (int) pos.val;
+				return (T) pos.val;
 			i++;
 			pos = pos.next;
 		}
 		System.out.println("Index does not exist!");
-		return -1;
+		return null;
 	}
 
 	/*
@@ -290,7 +357,7 @@ class LinkedList<T> {
 		// Iterates through the list
 		while (updatesMade < times && pos.next != null) {
 			// if position is oldVal, update it.
-			if (pos.val == oldVal) {
+			if (pos.val.equals(oldVal)) {
 				pos.val = newVal;
 				// Adds one to the count of updates made
 				updatesMade++;
@@ -315,7 +382,7 @@ class LinkedList<T> {
 		while (pos.next != null) {
 
 			// if position is oldVal, update it.
-			if (pos.val == oldVal) {
+			if (pos.val.equals(oldVal)) {
 				pos.val = newVal;
 				// Adds one to the count of updates made
 				updatesMade++;
