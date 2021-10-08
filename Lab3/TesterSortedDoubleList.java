@@ -115,11 +115,10 @@ public class TesterSortedDoubleList {
                         value = scan.nextLine();
                         if (isDigit(value) && type.equals("Integer")) {
                             count = list.erase(Integer.parseInt(value));
-                            System.out.println("The value " + value + " was removed " + count + " times!");
                         } else {
                             count = list.erase(value);
-                            System.out.println("The value " + value + " was removed " + count + " times!");
                         }
+                        System.out.println("The value " + value + " was removed " + count + " times!");
                         break;
                     case "10":
                         break;
