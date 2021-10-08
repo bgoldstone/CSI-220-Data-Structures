@@ -1,13 +1,13 @@
 import java.util.Scanner;
 
 public class TesterSortedDoubleList {
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         SortedDoubleList list;
         String input = "0";
-        String value = "";
+        String value;
         String type;
         String choice = "0";
-        int count = 0;
+        int count;
         Scanner scan = new Scanner(System.in);
         while (!(input.equals("1") || input.equals("2"))) {
             System.out.println("Welcome to the LinkedList Tester!");
@@ -134,10 +134,6 @@ public class TesterSortedDoubleList {
 
     public static boolean isDigit(String input) {
         //Good way to do things
-        if (input.matches("-?(0|[1-9]\\d*)")) {
-            return true;
-        } else {
-            return false;
-        }
+        return input.matches("-?(0|[1-9]\\d*)");
     }
 }
