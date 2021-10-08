@@ -74,7 +74,7 @@ public class TesterSortedDoubleList {
                         break;
 
                     case "5":
-                        String back = list.front().toString();
+                        String back = list.back().toString();
                         if (back != null) {
                             System.out.println("The last element is " + back);
                         } else {
