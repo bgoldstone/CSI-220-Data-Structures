@@ -1,69 +1,143 @@
+import java.util.Scanner;
+
 public class TesterSortedDoubleList {
-	public static void main(String[] args) {
-		// initialize lists
-		SortedDoubleList<String> strList = new SortedDoubleList<>();
-		SortedDoubleList<Integer> intList = new SortedDoubleList<>();
-		int[] ints = { 5, 2, 3, 6, 45, 8, 4, 60, 4, 5, 500, 7, 45785, 658, 4 };
-		for (int item : ints) {
-			intList.insert(item);
-		}
-		String[] strs = { "Hello", "I", "Am", "A", "Sorted", "List", "Hopefully", "I", "Hope", "I" };
-		for (String item : strs) {
-			strList.insert(item);
-		}
-		printLists(intList, strList);
-		// test cases
+    public static void main(String args[]) throws Exception {
+        SortedDoubleList list;
+        String input = "0";
+        String value = "";
+        String type;
+        String choice = "0";
+        int count = 0;
+        Scanner scan = new Scanner(System.in);
+        while (!(input.equals("1") || input.equals("2"))) {
+            System.out.println("Welcome to the LinkedList Tester!");
+            System.out.println("Choose a list type:\n1. String\n2. Integer");
+            System.out.print("Enter value: ");
+            input = scan.nextLine();
+            if (!((input.equals("1") || input.equals("2")))) {
+                System.out.println("Invalid choice! Please choose 1 or 2.\n");
+            }
+        }
+        if (input.equals("1")) {
+            list = new SortedDoubleList<String>();
+            type = "String";
+        } else {
+            list = new SortedDoubleList<Integer>();
+            type = "Integer";
+        }
+        while (!choice.equals("10")) {
+            System.out.println();
+            System.out.println("Please select an option:\n");
+            System.out.println("1. Insert element");
+            System.out.println("2. Print list size");
+            System.out.println("3. Is the list empty?");
+            System.out.println("4. Print first element");
+            System.out.println("5. Print last element");
+            System.out.println("6. Count elements with a particular value");
+            System.out.println("7. Remove first");
+            System.out.println("8. Remove last");
+            System.out.println("9. Remove elements with a particular value");
+            System.out.print("10. Quit\n\nEnter value:");
+            choice = scan.nextLine();
+            System.out.println();
+            if (isDigit(choice)) {
+                switch (choice) {
+                    case "1":
+                        System.out.print("What " + type + " would you like to add: ");
+                        value = scan.nextLine();
+                        if (isDigit(value) && type.equals("Integer"))
+                            list.insert(Integer.parseInt(value));
+                        else {
+                            list.insert(value);
+                        }
+                        break;
 
-		// size
-		System.out.println("\nInt Size: " + intList.size());
-		System.out.println("Str Size: " + strList.size());
+                    case "2":
+                        System.out.println(list.size());
+                        break;
 
-		// Front
-		System.out.println("\nInt List Front: " + intList.front());
-		System.out.println("Str List Front: " + strList.front());
+                    case "3":
+                        if (list.empty()) {
+                            System.out.println("List is empty");
+                        } else {
+                            System.out.println("List is not empty");
+                        }
+                        break;
 
-		// Back
-		System.out.println("\nInt List Back: " + intList.back());
-		System.out.println("Str List Back: " + strList.back());
+                    case "4":
+                        String front = list.front().toString();
+                        if (front != null) {
+                            System.out.println("The first element is " + front);
+                        } else {
+                            System.out.println("The list is empty. there is no first element.");
+                        }
+                        break;
 
-		// Count
-		System.out.println("\nInt List Count: " + intList.count(5));
-		System.out.println("Str List Count: " + strList.count("I"));
+                    case "5":
+                        String back = list.front().toString();
+                        if (back != null) {
+                            System.out.println("The last element is " + back);
+                        } else {
+                            System.out.println("The list is empty. there is no last element.");
+                        }
+                        break;
+                    case "6":
+                        System.out.print("What " + type + " would you like to count: ");
+                        value = scan.nextLine();
+                        if (isDigit(value) && type.equals("Integer"))
+                            count = list.count(Integer.parseInt(value));
+                        else {
+                            count = list.count(value);
+                        }
+                        System.out.println("The value " + value + " occurs " + count + " times.");
+                        break;
 
-		// pop front
-		System.out.println("\nBefore");
-		printLists(intList, strList);
-		System.out.println("Int list pop: " + intList.pop_front());
-		System.out.println("Str list pop: " + strList.pop_front());
-		System.out.println("After pop_front()");
-		printLists(intList, strList);
+                    case "7":
+                        value = list.pop_front().toString();
+                        if (value != null)
+                            System.out.println("Value " + value + " removed from the front of the list.");
+                        else {
+                            System.out.println("No value is removed because the list is empty.");
+                        }
+                        break;
 
-		// pop back
-		System.out.println("\nBefore");
-		printLists(intList, strList);
-		System.out.println("Int list pop: " + intList.pop_back());
-		System.out.println("Str list pop: " + strList.pop_back());
-		System.out.println("After pop_back()");
-		printLists(intList, strList);
+                    case "8":
+                        value = list.pop_back().toString();
+                        if (value != null)
+                            System.out.println("Value " + value + " removed from the end of the list.");
+                        else {
+                            System.out.println("No value is removed because the list is empty.");
+                        }
+                        break;
 
-		// erase
-		System.out.println("\nBefore");
-		printLists(intList, strList);
-		System.out.println("Int list remove: " + intList.erase(4));
-		System.out.println("Str list remove: " + strList.erase("I"));
-		System.out.println("After erase()");
-		printLists(intList, strList);
+                    case "9":
+                        System.out.print("What value do you want to remove? ");
+                        value = scan.nextLine();
+                        if (isDigit(value) && type.equals("Integer")) {
+                            count = list.erase(Integer.parseInt(value));
+                            System.out.println("The value " + value + " was removed " + count + " times!");
+                        } else {
+                            count = list.erase(value);
+                            System.out.println("The value " + value + " was removed " + count + " times!");
+                        }
+                        break;
+                    case "10":
+                        break;
+                    default:
+                        System.out.println("Invalid option!");
+                        break;
+                }
+            }
+        }
 
-	}
+    }
 
-	/**
-	 * Prints both Lists.
-	 *
-	 * @param intList Integer List.
-	 * @param strList String List.
-	 */
-	public static void printLists(SortedDoubleList<Integer> intList, SortedDoubleList<String> strList) {
-		System.out.println(intList.toString());
-		System.out.println(strList.toString());
-	}
+    public static boolean isDigit(String input) {
+        //Good way to do things
+        if (input.matches("-?(0|[1-9]\\d*)")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
