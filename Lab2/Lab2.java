@@ -35,7 +35,7 @@ public class Lab2 {
 		 * System.out.println("intListnumber of nodes: " + intList.lengthIterative());
 		 * System.out.println("boolListnumber of nodes: " + boolList.lengthIterative());
 		 */
-		LinkedList<Integer> intList = new LinkedList<Integer>();
+		LinkedList<Integer> intList = new LinkedList<>();
 		for (int i = 0; i < 20; i++) {
 			intList.insertLast(i);
 			if (i % 5 == 0) {
