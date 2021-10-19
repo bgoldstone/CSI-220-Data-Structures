@@ -36,13 +36,14 @@ public class Lab4 {
 				System.out.println("The infix sequence is \"" + toInfix() + "\"");
 				break;
             case '3':
-                System.out.println("The evaluated infix sequence is \"" +toInfixEvaluated() +"\"");
+                System.out.println(toInfixEvaluated());
 			case '4':
 				break;
 			default:
 				System.out.println("Invalid Option!");
 				break;
 			}
+            System.out.println();
 		}
 	}
 
@@ -63,16 +64,6 @@ public class Lab4 {
                 String a = stack.pop();
                 String b = String.valueOf(currentValue);
                 String c = stack.pop();
-//                if(b.equals("*"))
-//                    stack.push(Integer.toString((Integer.parseInt(c) * Integer.parseInt(a))));
-//                else if(b.equals("/"))
-//                    stack.push(Integer.toString((Integer.parseInt(c) / Integer.parseInt(a))));
-//                else if(b.equals("+"))
-//                    stack.push(Integer.toString((Integer.parseInt(c) + Integer.parseInt(a))));
-//                else if(b.equals("-"))
-//                    stack.push(Integer.toString((Integer.parseInt(c) - Integer.parseInt(a))));
-//                else if(b.equals("%"))
-//                    stack.push(Integer.toString((Integer.parseInt(c) % Integer.parseInt(a))));
                 stack.push(c + b + a);
             }
         }
@@ -91,7 +82,9 @@ public class Lab4 {
         String input = scan.nextLine();
         System.out.println();
         for (Character currentValue : input.toCharArray()) {
-            if (Character.isLetterOrDigit(currentValue)) {
+            if(Character.isLetter(currentValue))
+                return "Postfix to Infix and evaluation does not work with letters!";
+            else if (Character.isDigit(currentValue)) {
                 stack.push(String.valueOf(currentValue));
             } else if (currentValue.equals("(") || (currentValue.equals(")")))
                 continue;
@@ -114,7 +107,7 @@ public class Lab4 {
         while (!stack.isEmpty()) {
             output.append(stack.pop());
         }
-        return output.toString();
+        return "The evaluated infix sequence is \"" + output.toString() + "\"";
     }
 
 	public static String toPostfix() {
