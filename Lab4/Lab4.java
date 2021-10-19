@@ -69,7 +69,7 @@ public class Lab4 {
         for (Character currentValue : input.toCharArray()) {
             //Determines character
             //if is digit
-            if (Character.isDigit(currentValue)) {
+            if (Character.isLetterOrDigit(currentValue)) {
                 output.append(currentValue);
                 continue;
             }
