@@ -48,7 +48,7 @@ public class Lab4 {
                     try {
                         option = scan.nextLine().charAt(0);
                     } catch (StringIndexOutOfBoundsException E) {
-                        option = 0;
+                        option = '0';
                     }
                     if (option == '1') {
                         String returnValue = toInfix();
