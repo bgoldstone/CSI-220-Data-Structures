@@ -5,12 +5,10 @@ public class MyQueue {
     private int size;
     private int front;
     private int rear;
-    private int[] emptyList;
 
     public MyQueue(int mySize) {
         this.size = mySize;
         this.queue = new int[size];
-        this.emptyList = new int[size];
         front = -1;
         rear = -1;
     }
@@ -42,7 +40,7 @@ public class MyQueue {
     }
 
     public boolean isEmpty() {
-        return Arrays.compare(queue, emptyList) == 0;
+        return Arrays.compare(queue, new int[size]) == 0;
     }
 
     public boolean isFull() {
@@ -53,7 +51,7 @@ public class MyQueue {
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
         for (int i : queue) {
-            sb.append(i + ", ");
+            sb.append(i).append(", ");
         }
         sb.append("]\n");
         return sb.toString();
