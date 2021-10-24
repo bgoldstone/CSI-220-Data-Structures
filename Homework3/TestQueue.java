@@ -25,7 +25,7 @@ public class TestQueue {
                     System.out.println(queue);
                     break;
                 case 2:
-                    System.out.println(queue.dequeue());
+                    System.out.println("Dequeued a \"" + queue.dequeue() + "\".");
                     System.out.println(queue);
                     break;
                 case 3:
