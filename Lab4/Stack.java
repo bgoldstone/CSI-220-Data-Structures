@@ -39,10 +39,10 @@ public class Stack<T> implements StackInterface<T> {
 }
 
 class LinkedList<T> {
-    private Node head; // Pointer to the head of the list.
+    private Node top; // Pointer to the head of the list.
 
     public LinkedList() {
-        head = null;
+        top = null;
     }
 
     /*
@@ -53,9 +53,9 @@ class LinkedList<T> {
         Node ptr = new Node(); // Construct a new node - ptr points to it.
         ptr.data = item; // New node's data is the parameter item.
         if (!isEmpty()) {
-            ptr.next = head;
+            ptr.next = top;
         }
-        head = ptr;
+        top = ptr;
     }
 
     /*
@@ -65,7 +65,7 @@ class LinkedList<T> {
      */
 
     public int size() {
-        Node ptr = head; // A pointer to travel the list.
+        Node ptr = top; // A pointer to travel the list.
         int count = 0; // Counts the number of nodes.
 
         while (ptr != null) // While not at the end of the list.
@@ -82,8 +82,8 @@ class LinkedList<T> {
      * removes first element
      */
     public T removeFirst() {
-        Node temp = head;
-        head = head.next;
+        Node temp = top;
+        top = top.next;
         return temp.data;
     }
 
@@ -92,7 +92,7 @@ class LinkedList<T> {
      * returns first element data
      */
     public T getFirst() {
-        return head.data;
+        return top.data;
     }
 
     /*
@@ -101,7 +101,7 @@ class LinkedList<T> {
      * false if list is not
      */
     public boolean isEmpty() {
-        return head == null;
+        return top == null;
     }
 
     /*
@@ -109,7 +109,7 @@ class LinkedList<T> {
      */
 
     public void display() {
-        Node ptr = head; // Pointer to traverse the list.
+        Node ptr = top; // Pointer to traverse the list.
 
         while (ptr != null) { // While not at the end of the list ...
             T data = ptr.data; // Get data of current node.
@@ -121,7 +121,7 @@ class LinkedList<T> {
     }
 
     public void clear() {
-        head = null;
+        top = null;
     }
 
     private class Node {
