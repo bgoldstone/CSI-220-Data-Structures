@@ -22,6 +22,7 @@ public class Lab4 {
 
     public static void main(String[] args) {
         char option = '0';
+        String input = "";
         while (option != '3') {
             System.out.print("""
                     Please enter an option:
@@ -37,7 +38,10 @@ public class Lab4 {
             System.out.println();
             switch (option) {
                 case '1':
-                    System.out.println("The postfix sequence is \"" + toPostfix() + "\"");
+                    System.out.print("Enter a string to convert to postfix: ");
+                    input = scan.nextLine();
+                    System.out.println();
+                    System.out.println("The postfix sequence is \"" + toPostfix(input) + "\"");
                     break;
                 case '2':
                     System.out.print("""
@@ -50,14 +54,19 @@ public class Lab4 {
                     } catch (StringIndexOutOfBoundsException E) {
                         option = '0';
                     }
+                    if (option == '1' || option == '2') {
+                        System.out.print("Enter a string to convert to postfix: ");
+                        input = scan.nextLine();
+                        System.out.println();
+                    }
                     if (option == '1') {
-                        String returnValue = toInfix();
+                        String returnValue = toInfix(input);
                         if (returnValue.equals("1")) {
                             System.out.println("Invalid Input!");
                         } else
                             System.out.println("The infix sequence is \"" + returnValue + "\"");
                     } else if (option == '2')
-                        System.out.println(toInfixEvaluated());
+                        System.out.println(toInfixEvaluated(input));
                     else
                         System.out.println("Invalid Option!");
                     break;
@@ -76,14 +85,11 @@ public class Lab4 {
      *
      * @return Infix representation.
      */
-    public static String toInfix() {
+    public static String toInfix(String input) {
         // clears StringBuilder & Stack
         output.setLength(0);
         stack.clear();
-        // gets String from user
-        System.out.print("Enter a string to convert to postfix: ");
-        String input = scan.nextLine();
-        System.out.println();
+        input = input.replace(" ", "");
         for (Character currentValue : input.toCharArray()) {
             if (Character.isLetterOrDigit(currentValue)) {
                 stack.push(String.valueOf(currentValue));
@@ -111,14 +117,11 @@ public class Lab4 {
      *
      * @return a number that the postfix expression evaluates to.
      */
-    public static String toInfixEvaluated() {
+    public static String toInfixEvaluated(String input) {
         // clears StringBuilder & Stack
         output.setLength(0);
         stack.clear();
-        // gets String from user
-        System.out.print("Enter a string to convert to postfix: ");
-        String input = scan.nextLine();
-        System.out.println();
+        input = input.replace(" ", "");
         for (Character currentValue : input.toCharArray()) {
             if (Character.isLetter(currentValue))
                 return "Postfix to Infix and evaluation does not work with letters!";
@@ -148,15 +151,13 @@ public class Lab4 {
      *
      * @return Postfix representation.
      */
-    public static String toPostfix() {
+    public static String toPostfix(String input) {
         // clears StringBuilder & Stack
         output.setLength(0);
         stack.clear();
         Operation currentOperator = Operation.None;
         Operation stackOperator;
-        // gets String from user
-        System.out.print("Enter a string to convert to infix: ");
-        String input = scan.nextLine().replace(" ", "");
+        input = input.replace(" ", "");
         for (Character currentValue : input.toCharArray()) {
             // Determines character
             // if is digit
