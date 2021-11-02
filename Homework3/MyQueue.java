@@ -1,7 +1,10 @@
 import java.util.Arrays;
 
 /**
- * Implementation of a Queue
+ * A Circular Implementation of a Queue
+ *
+ * @author Ben Goldstone
+ * @version 11/2/2021
  */
 public class MyQueue {
     private int[] queue;

@@ -1,5 +1,10 @@
 import java.util.Scanner;
 
+/**
+ * A program to test the {@link MyQueue} object.
+ * @author Ben Goldstone
+ * @version 11/2/2021
+ */
 public class TestQueue {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
