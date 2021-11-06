@@ -196,10 +196,7 @@ public class BinarySearchTreeTester {
                 case '1':
                     System.out.print("\nWhat value would you like to delete? ");
                     try {
-                        if(intTree.delete(scan.nextInt()))
-                            System.out.println("Element successfully removed.");
-                        else
-                            System.out.println("Element could not be removed.");
+                        intTree.delete(scan.nextInt());
                     } catch (InputMismatchException e) {
                         System.out.println("Invalid Data Type!");
                     }
@@ -208,10 +205,7 @@ public class BinarySearchTreeTester {
                 case '2':
                     System.out.print("\nWhat value would you like to delete? ");
                     try {
-                        if(charTree.delete(scan.nextLine().charAt(0)))
-                            System.out.println("Element successfully removed.");
-                        else
-                            System.out.println("Element could not be removed.");
+                        charTree.delete(scan.nextLine().charAt(0));
                     } catch (InputMismatchException e) {
                         System.out.println("Invalid Data Type!");
                     }
@@ -219,10 +213,7 @@ public class BinarySearchTreeTester {
                 case '3':
                     System.out.print("\nWhat value would you like to delete? ");
                     try {
-                        if(doubleTree.delete(scan.nextDouble()))
-                            System.out.println("Element successfully removed.");
-                        else
-                            System.out.println("Element could not be removed.");
+                        doubleTree.delete(scan.nextDouble());
                     } catch (InputMismatchException e) {
                         System.out.println("Invalid Data Type!");
                     }

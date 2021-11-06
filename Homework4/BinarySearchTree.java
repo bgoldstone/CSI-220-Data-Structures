@@ -32,8 +32,35 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return current;
     }
 
-    public boolean delete(T value){
+    public void delete(T value){
+        root = deleteRecursive(value, root);
+    }
+    private Node deleteRecursive(T value, Node current){
+        if(current == null)
+            return root;
+        else if (current.value.compareTo(value) < 0)
+            deleteRecursive(value,current.left);
+        else if(current.value.compareTo(value) > 0)
+            deleteRecursive(value,current.right);
+        else{
+            if(current.left == null)
+                return current.right;
+            else if (current.right == null)
+                return current.left;
 
+            root.value = getSuccessor(root.right);
+
+            root.right = deleteRecursive(root.value, root.right);
+        }
+        return root;
+    }
+    private T getSuccessor(Node current){
+        T successor = current.value;
+        while(current.left != null){
+            successor = current.left.value;
+            current = current.left;
+        }
+        return successor;
     }
 
     public void print(char c) {
