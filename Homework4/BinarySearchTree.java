@@ -22,44 +22,44 @@ public class BinarySearchTree<T extends Comparable<T>> {
         root = insertRecursive(root, value);
     }
 
-    private Node insertRecursive(Node current, T value) {
+    private Node insertRecursive(Node x, T value) {
         if (isEmpty())
-            current = new Node(value);
-        else if (current.value.compareTo(value) > 0)
-            current.left = insertRecursive(current.left, value);
-        else if (current.value.compareTo(value) < 0)
-            current.right = insertRecursive(current.right, value);
-        return current;
+            x = new Node(value);
+        else if (x.value.compareTo(value) > 0)
+            x.left = insertRecursive(x.left, value);
+        else if (x.value.compareTo(value) < 0)
+            x.right = insertRecursive(x.right, value);
+        return x;
     }
 
     public void delete(T value) {
-        root = deleteRecursive(value, root);
+        root = deleteRecursive(root, value);
     }
 
-    private Node deleteRecursive(T value, Node current) {
+    private Node deleteRecursive(Node x, T value) {
         //base case
-        if (current == null)
-            return current;
+        if (x == null)
+            return x;
             //if value smaller than left
-        else if (current.value.compareTo(value) < 0)
-            deleteRecursive(value, current.left);
+        else if (x.value.compareTo(value) < 0)
+            deleteRecursive(x.left, value);
             //if value smaller than left
-        else if (current.value.compareTo(value) > 0)
-            deleteRecursive(value, current.right);
+        else if (x.value.compareTo(value) > 0)
+            deleteRecursive(x.right, value);
             //else successor time!
         else {
             //if node has one or zero children
-            if (current.left == null)
-                return current.right;
-            else if (current.right == null)
-                return current.left;
+            if (x.left == null)
+                return x.right;
+            else if (x.right == null)
+                return x.left;
             //if node has two children get the smallest value on right side of tree
-            current.value = getSuccessor(current.right);
+            x.value = getSuccessor(x.right);
 
             //deletes successor, as it is moved
-            current.right = deleteRecursive(current.value, current.right);
+            x.right = deleteRecursive(x.right, x.value);
         }
-        return current;
+        return x;
     }
 
     /**
@@ -76,41 +76,33 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     public void print(char c) {
         switch (c) {
-            case '1':
-                printPreOrderResursive(root);
-                break;
-            case '2':
-                printPostOrderResursive(root);
-                break;
-            case '3':
-                printInOrderResursive(root);
-                break;
-            default:
-                System.out.println("Invalid Option!");
-                break;
+            case '1' -> printPreOrderRecursive(root);
+            case '2' -> printPostOrderRecursive(root);
+            case '3' -> printInOrderRecursive(root);
+            default -> System.out.println("Invalid Option!");
         }
     }
 
-    private void printInOrderResursive(Node x) {
+    private void printInOrderRecursive(Node x) {
         if (x == null) return;
-        printInOrderResursive(x.left);
+        printInOrderRecursive(x.left);
         System.out.println(x.value);
-        printInOrderResursive(x.right);
+        printInOrderRecursive(x.right);
     }
 
-    private void printPostOrderResursive(Node x) {
+    private void printPostOrderRecursive(Node x) {
         if (x == null) return;
-        printPostOrderResursive(x.left);
-        printPostOrderResursive(x.right);
+        printPostOrderRecursive(x.left);
+        printPostOrderRecursive(x.right);
         System.out.println(x.value);
 
     }
 
-    private void printPreOrderResursive(Node x) {
+    private void printPreOrderRecursive(Node x) {
         if (x == null) return;
         System.out.println(x.value);
-        printPreOrderResursive(x.left);
-        printPreOrderResursive(x.right);
+        printPreOrderRecursive(x.left);
+        printPreOrderRecursive(x.right);
     }
 
     public boolean isEmpty() {
