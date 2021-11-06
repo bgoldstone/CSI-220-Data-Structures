@@ -5,37 +5,65 @@ import java.util.Random;
 public class BinarySearchTreeTester {
     static Scanner scan;
     static BinarySearchTree<Integer> intTree;
-    static BinarySearchTree<Double> doubleTree;
     static BinarySearchTree<Character> charTree;
+    static BinarySearchTree<Double> doubleTree;
+
 
     public static void main(String[] args) {
+        intTree = new BinarySearchTree<>();
         charTree = new BinarySearchTree<>();
         doubleTree = new BinarySearchTree<>();
-        intTree = new BinarySearchTree<>();
         scan = new Scanner(System.in);
 
         char choice = '0';
-        while (choice != '4') {
+        while (choice != '5') {
             System.out.print("""
                     What would you like to do?
                     1. Insert an element
                     2. Delete an element
                     3. Find an element
-                    4. Exit
-                    Enter an Option (1,2,3,4): """);
+                    4. Print List
+                    5. Exit
+                    Enter a choice (1,2,3,4,5): """);
             choice = scan.nextLine().charAt(0);
             switch (choice) {
                 case '1':
-                    insertTree();
+                    insertElement();
                     System.out.println("Element successfully added");
                     break;
+                case '2':
+                    deleteElement();
+                    break;
+                case '3':
+                    break;
+                case '4':
+                    break;
+                case '5':
+                    System.out.print("""
+                            What would you like to view?
+                            1. Print preorder list
+                            2. Print inorder list
+                            3. Print postorder list
+                            Enter a choice (1,2,3): """);
+                    char type = scan.nextLine().charAt(0);
+                    System.out.println("Integer Tree: ");
+                    intTree.print(type);
+                    System.out.println("Character Tree: ");
+                    charTree.print(type);
+                    System.out.println("Double Tree: ");
+                    doubleTree.print(type);
+
+                    break;
+                default:
+                    System.out.println("Invalid Option!");
 
 
             }
         }
     }
+
     //insert method
-    private static void insertTree() {
+    private static void insertElement() {
         char choice = '0';
         while (choice != '3') {
             System.out.print("""
@@ -43,7 +71,7 @@ public class BinarySearchTreeTester {
                     1. Insert one element
                     2. Insert ten random element
                     3. Return to main menu
-                    Enter an Option (1,2,3): """);
+                    Enter a choice (1,2,3): """);
             choice = scan.nextLine().charAt(0);
             switch (choice) {
                 case '1':
@@ -61,6 +89,7 @@ public class BinarySearchTreeTester {
             System.out.println();
         }
     }
+
     //inserts one of the users choice
     private static void Insert_One() {
         char choice = '0';
@@ -71,7 +100,7 @@ public class BinarySearchTreeTester {
                     2. Insert Character
                     3. Insert Double
                     4. Return to main menu
-                    Enter an Option (1,2,3,4): """);
+                    Enter a choice (1,2,3,4): """);
             choice = scan.nextLine().charAt(0);
             //inserts based on user's choice
             switch (choice) {
@@ -101,6 +130,8 @@ public class BinarySearchTreeTester {
                     }
                     scan.nextLine();
                     break;
+                case '4':
+                    break;
                 default:
                     System.out.println("Invalid insert option!");
 
@@ -108,6 +139,7 @@ public class BinarySearchTreeTester {
             System.out.println();
         }
     }
+
     //inserts 10 random elements
     private static void Insert10() {
         Random rand = new Random();
@@ -119,7 +151,7 @@ public class BinarySearchTreeTester {
                     2. Insert Character
                     3. Insert Double
                     4. Return to main menu
-                    Enter an Option (1,2,3,4): """);
+                    Enter a choice (1,2,3,4): """);
             choice = scan.nextLine().charAt(0);
             //inserts based on user's choice
             switch (choice) {
@@ -144,6 +176,65 @@ public class BinarySearchTreeTester {
                     System.out.println("Invalid Option!");
                     break;
             }
+        }
+    }
+
+    //deletes user given element
+    private static void deleteElement() {
+        char choice = '0';
+        while (choice != '4') {
+            System.out.print("""
+                    What would you like delete?
+                    1. Delete integer
+                    2. Delete character
+                    3. Delete double
+                    4. Return to main menu
+                    Enter a choice (1,2,3,4): """);
+            choice = scan.nextLine().charAt(0);
+            //inserts based on user's choice
+            switch (choice) {
+                case '1':
+                    System.out.print("\nWhat value would you like to delete? ");
+                    try {
+                        if(intTree.delete(scan.nextInt()))
+                            System.out.println("Element successfully removed.");
+                        else
+                            System.out.println("Element could not be removed.");
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid Data Type!");
+                    }
+                    scan.nextLine();
+                    break;
+                case '2':
+                    System.out.print("\nWhat value would you like to delete? ");
+                    try {
+                        if(charTree.delete(scan.nextLine().charAt(0)))
+                            System.out.println("Element successfully removed.");
+                        else
+                            System.out.println("Element could not be removed.");
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid Data Type!");
+                    }
+                    break;
+                case '3':
+                    System.out.print("\nWhat value would you like to delete? ");
+                    try {
+                        if(doubleTree.delete(scan.nextDouble()))
+                            System.out.println("Element successfully removed.");
+                        else
+                            System.out.println("Element could not be removed.");
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid Data Type!");
+                    }
+                    scan.nextLine();
+                    break;
+                case '4':
+                    break;
+                default:
+                    System.out.println("Invalid insert option!");
+
+            }
+            System.out.println();
         }
     }
 }

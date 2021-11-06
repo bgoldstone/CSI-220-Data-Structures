@@ -17,6 +17,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         root = null;
     }
 
+    //inserts element into tree
     public void insert(T value) {
         root = insertRecursive(root, value);
     }
@@ -31,15 +32,47 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return current;
     }
 
-    public void inOrder() {
-        inOrderResursive(root);
+    public boolean delete(T value){
+
     }
 
-    private void inOrderResursive(Node x) {
+    public void print(char c) {
+        switch(c) {
+            case '1':
+                printPreOrderResursive(root);
+                break;
+            case '2':
+                printPostOrderResursive(root);
+                break;
+            case '3':
+                printInOrderResursive(root);
+                break;
+            default:
+                System.out.println("Invalid Option!");
+                break;
+        }
+    }
+
+    private void printInOrderResursive(Node x) {
         if (x == null) return;
-        inOrderResursive(x.left);
+        printInOrderResursive(x.left);
         System.out.println(x.value);
-        inOrderResursive(x.right);
+        printInOrderResursive(x.right);
+    }
+
+    private void printPostOrderResursive(Node x) {
+        if (x == null) return;
+        printPostOrderResursive(x.left);
+        printPostOrderResursive(x.right);
+        System.out.println(x.value);
+
+    }
+
+    private void printPreOrderResursive(Node x) {
+        if (x == null) return;
+        System.out.println(x.value);
+        printPreOrderResursive(x.left);
+        printPreOrderResursive(x.right);
     }
 
     public boolean isEmpty() {
