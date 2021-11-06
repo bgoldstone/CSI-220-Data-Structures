@@ -34,7 +34,7 @@ public class BinarySearchTreeTester {
             }
         }
     }
-
+    //insert method
     private static void insertTree() {
         char choice = '0';
         while (choice != '3') {
@@ -61,7 +61,7 @@ public class BinarySearchTreeTester {
             System.out.println();
         }
     }
-
+    //inserts one of the users choice
     private static void Insert_One() {
         char choice = '0';
         while (choice != '4') {
@@ -73,6 +73,7 @@ public class BinarySearchTreeTester {
                     4. Return to main menu
                     Enter an Option (1,2,3,4): """);
             choice = scan.nextLine().charAt(0);
+            //inserts based on user's choice
             switch (choice) {
                 case '1':
                     System.out.print("\nWhat value would you like to insert? ");
@@ -107,7 +108,7 @@ public class BinarySearchTreeTester {
             System.out.println();
         }
     }
-
+    //inserts 10 random elements
     private static void Insert10() {
         Random rand = new Random();
         char choice = 0;
@@ -120,6 +121,7 @@ public class BinarySearchTreeTester {
                     4. Return to main menu
                     Enter an Option (1,2,3,4): """);
             choice = scan.nextLine().charAt(0);
+            //inserts based on user's choice
             switch (choice) {
                 case '1':
                     for (int i = 0; i < 10; i++) {
