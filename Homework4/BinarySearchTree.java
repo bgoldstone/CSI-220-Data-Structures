@@ -32,31 +32,42 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return current;
     }
 
-    public void delete(T value){
+    public void delete(T value) {
         root = deleteRecursive(value, root);
     }
-    private Node deleteRecursive(T value, Node current){
-        if(current == null)
-            return root;
+
+    private Node deleteRecursive(T value, Node current) {
+        //base case
+        if (current == null)
+            return current;
+            //if value smaller than left
         else if (current.value.compareTo(value) < 0)
-            deleteRecursive(value,current.left);
-        else if(current.value.compareTo(value) > 0)
-            deleteRecursive(value,current.right);
-        else{
-            if(current.left == null)
+            deleteRecursive(value, current.left);
+            //if value smaller than left
+        else if (current.value.compareTo(value) > 0)
+            deleteRecursive(value, current.right);
+            //else successor time!
+        else {
+            //if node has one or zero children
+            if (current.left == null)
                 return current.right;
             else if (current.right == null)
                 return current.left;
+            //if node has two children get the smallest value on right side of tree
+            current.value = getSuccessor(current.right);
 
-            root.value = getSuccessor(root.right);
-
-            root.right = deleteRecursive(root.value, root.right);
+            //deletes successor, as it is moved
+            current.right = deleteRecursive(current.value, current.right);
         }
-        return root;
+        return current;
     }
-    private T getSuccessor(Node current){
+
+    /**
+     * Gets the smallest value on right side of tree
+     */
+    private T getSuccessor(Node current) {
         T successor = current.value;
-        while(current.left != null){
+        while (current.left != null) {
             successor = current.left.value;
             current = current.left;
         }
@@ -64,7 +75,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     public void print(char c) {
-        switch(c) {
+        switch (c) {
             case '1':
                 printPreOrderResursive(root);
                 break;
