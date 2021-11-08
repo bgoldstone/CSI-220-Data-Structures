@@ -1,5 +1,7 @@
 public class BinarySearchTree<T extends Comparable<T>> {
     private Node root;
+    private int depth;
+    private boolean isInTree;
 
     class Node {
         Node right;
@@ -23,7 +25,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     private Node insertRecursive(Node x, T value) {
-        if (isEmpty())
+        if (x == null)
             x = new Node(value);
         else if (x.value.compareTo(value) > 0)
             x.left = insertRecursive(x.left, value);
@@ -74,13 +76,61 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return successor;
     }
 
+    public boolean findNode(T value) {
+        isInTree = false;
+        findNodeRecursive(root,value);
+        return isInTree;
+    }
+
+    private void findNodeRecursive(Node x, T value) {
+        if (x == null)
+            return;
+        findNodeRecursive(x.left, value);
+        if (x.value.equals(value)) {
+            isInTree = true;
+            return;
+        }
+        findNodeRecursive(x.right, value);
+    }
+
     public void print(char c) {
         switch (c) {
             case '1' -> printPreOrderRecursive(root);
-            case '2' -> printPostOrderRecursive(root);
-            case '3' -> printInOrderRecursive(root);
+            case '2' -> printInOrderRecursive(root);
+            case '3' -> printPostOrderRecursive(root);
             default -> System.out.println("Invalid Option!");
         }
+    }
+
+    public int getDepthNode(T value) {
+        depth = 0;
+        getDepthNodeRecursive(root, value);
+        return depth;
+    }
+
+    private Node getDepthNodeRecursive(Node x, T value) {
+        if (x.value == value)
+            return x;
+        else if (x.value.compareTo(value) > 0) {
+            depth++;
+            x.left = getDepthNodeRecursive(x.left, value);
+        } else if (x.value.compareTo(value) < 0) {
+            depth++;
+            x.right = getDepthNodeRecursive(x.right, value);
+        }
+        return x;
+    }
+
+    public int getDepthTree() {
+        depth = 0;
+        if (root == null)
+            return -1;
+        getDepthTreeRecursive(root);
+        return depth;
+    }
+
+    private Node getDepthTreeRecursive(Node x) {
+        return x;
     }
 
     private void printInOrderRecursive(Node x) {
