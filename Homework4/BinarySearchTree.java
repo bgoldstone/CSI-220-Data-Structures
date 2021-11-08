@@ -20,6 +20,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     }
 
     //inserts element into tree
+    //Time Complexity is O(lgn)
     public void insert(T value) {
         root = insertRecursive(root, value);
     }
@@ -33,7 +34,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
             x.right = insertRecursive(x.right, value);
         return x;
     }
-
+    //Time Complexity is O(lgn)
     public void delete(T value) {
         root = deleteRecursive(root, value);
     }
@@ -75,10 +76,10 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
         return successor;
     }
-
+    //Time Complexity is O(lgn)
     public boolean findNode(T value) {
         isInTree = false;
-        findNodeRecursive(root,value);
+        findNodeRecursive(root, value);
         return isInTree;
     }
 
@@ -91,6 +92,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
             return;
         }
         findNodeRecursive(x.right, value);
+        if (x.value.equals(value))
+            isInTree = true;
     }
 
     public void print(char c) {
@@ -102,6 +105,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
     }
 
+    //Time Complexity is O(lgn)
     public int getDepthNode(T value) {
         depth = 0;
         getDepthNodeRecursive(root, value);
@@ -121,16 +125,23 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return x;
     }
 
+    //Time Complexity is O(n)
     public int getDepthTree() {
-        depth = 0;
         if (root == null)
             return -1;
-        getDepthTreeRecursive(root);
-        return depth;
+        else {
+            return getDepthTreeRecursive(root);
+        }
     }
 
-    private Node getDepthTreeRecursive(Node x) {
-        return x;
+    private int getDepthTreeRecursive(Node x) {
+        int leftMax = getDepthTreeRecursive(x.left);
+        int rightMax = getDepthTreeRecursive(x.right);
+        if (leftMax > rightMax)
+            return leftMax + 1;
+        else
+            return rightMax + 1;
+
     }
 
     private void printInOrderRecursive(Node x) {
@@ -155,7 +166,24 @@ public class BinarySearchTree<T extends Comparable<T>> {
         printPreOrderRecursive(x.right);
     }
 
-    public boolean isEmpty() {
-        return root == null;
+    public void SwapTree() {
+        SwapTreeRecursive(root);
+    }
+
+    //Time Complexity O(n)
+    private Node SwapTreeRecursive(Node x) {
+        if (x == null)
+            return x;
+        else {
+            SwapTreeRecursive(x.left);
+            Node swap = x.left;
+            x.left = x.right;
+            x.right = swap;
+            SwapTreeRecursive(x.right);
+            swap = x.left;
+            x.left = x.right;
+            x.right = swap;
+        }
+        return x;
     }
 }
