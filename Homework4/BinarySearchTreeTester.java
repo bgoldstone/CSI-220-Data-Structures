@@ -26,7 +26,7 @@ public class BinarySearchTreeTester {
                     3. Find an element
                     4. Print List
                     5. Exit
-                    Enter a choice (1,2,3,4,5):\\s""");
+                    Enter a choice (1,2,3,4,5):\s""");
             choice = scan.nextLine().charAt(0);
             switch (choice) {
                 case '1':
@@ -44,7 +44,7 @@ public class BinarySearchTreeTester {
                             1. Print preorder list
                             2. Print inorder list
                             3. Print postorder list
-                            Enter a choice (1,2,3)\\s""");
+                            Enter a choice (1,2,3)\s""");
                     char type = scan.nextLine().charAt(0);
                     System.out.println("Integer Tree: ");
                     intTree.print(type);
@@ -71,7 +71,7 @@ public class BinarySearchTreeTester {
                 1. Find Integer
                 2. Find Character
                 3. Find Double
-                Enter a choice (1,2,3):\\s""");
+                Enter a choice (1,2,3):\s""");
         char choice = scan.nextLine().charAt(0);
         if (choice == '1' || choice == '2' || choice == '3')
             System.out.print("What value would you like to find? ");
@@ -112,7 +112,7 @@ public class BinarySearchTreeTester {
                 1. Insert one element
                 2. Insert ten random elements
                 3. Return to main menu
-                Enter a choice (1,2,3):\\s""");
+                Enter a choice (1,2,3):\s""");
         choice = scan.nextLine().charAt(0);
         switch (choice) {
             case '1':
@@ -139,7 +139,7 @@ public class BinarySearchTreeTester {
                 2. Insert Character
                 3. Insert Double
                 4. Return to main menu
-                Enter a choice (1,2,3,4):\\s""");
+                Enter a choice (1,2,3,4):\s""");
         choice = scan.nextLine().charAt(0);
         //inserts based on user's choice
         String insertMessage = "\nWhat value would you like to insert? ";
@@ -188,7 +188,7 @@ public class BinarySearchTreeTester {
                 2. Insert Character
                 3. Insert Double
                 4. Return to main menu
-                Enter a choice (1,2,3,4):\\s""");
+                Enter a choice (1,2,3,4):\s""");
         choice = scan.nextLine().charAt(0);
         //inserts based on user's choice
         switch (choice) {
@@ -224,7 +224,7 @@ public class BinarySearchTreeTester {
                 2. Delete character
                 3. Delete double
                 4. Return to main menu
-                Enter a choice (1,2,3,4):\\s""");
+                Enter a choice (1,2,3,4):\s""");
         choice = scan.nextLine().charAt(0);
         String deleteMessage = "\nWhat value would you like to delete? ";
         //inserts based on user's choice
