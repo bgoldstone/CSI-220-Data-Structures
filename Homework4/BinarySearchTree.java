@@ -131,7 +131,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
      * @param value value to find.
      */
     private void findNodeRecursive(Node x, T value) {
-        if (x == null)
+        if (x == null || isInTree)
             return;
         findNodeRecursive(x.left, value);
         if (x.value.equals(value)) {
