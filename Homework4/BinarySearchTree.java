@@ -1,3 +1,8 @@
+/**
+ * Object of a {@link BinarySearchTree}.
+ *
+ * @param <T> Data Type of {@link BinarySearchTree}.
+ */
 public class BinarySearchTree<T extends Comparable<T>> {
     private Node root;
     private int depth;
