@@ -2,6 +2,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Random;
 
+/**
+ * Tests the {@link BinarySearchTree} Objects.
+ */
 public class BinarySearchTreeTester {
     static Scanner scan;
     static BinarySearchTree<Integer> intTree;
@@ -11,6 +14,11 @@ public class BinarySearchTreeTester {
     static String invalidData = "Invalid Data Type!";
     static Random rand = new Random();
 
+    /**
+     * Main method. allows user to modify {@link BinarySearchTree}.
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         intTree = new BinarySearchTree<>();
         charTree = new BinarySearchTree<>();
@@ -63,6 +71,9 @@ public class BinarySearchTreeTester {
         }
     }
 
+    /**
+     * Finds an element in a specific tree.
+     */
     private static void findElement() {
         String isInTree = "Node is in the tree!";
         String isNotInTree = "Node is not in the tree!";
@@ -104,7 +115,9 @@ public class BinarySearchTreeTester {
 
     }
 
-    //insert method
+    /**
+     * Inserts an element of the list and sends them to either Insert_One or Insert10.
+     */
     private static void insertElement() {
         char choice;
         System.out.print("""
@@ -130,7 +143,9 @@ public class BinarySearchTreeTester {
         System.out.println();
     }
 
-    //inserts one of the users choice
+    /**
+     * inserts one of the users choice
+     */
     private static void Insert_One() {
         char choice;
         System.out.print("""
@@ -179,7 +194,9 @@ public class BinarySearchTreeTester {
         System.out.println();
     }
 
-    //inserts 10 random elements
+    /**
+     * inserts 10 random elements
+     */
     private static void Insert10() {
         char choice;
         System.out.print("""
@@ -215,7 +232,9 @@ public class BinarySearchTreeTester {
         }
     }
 
-    //deletes user given element
+    /**
+     * deletes user given element
+     */
     private static void deleteElement() {
         char choice;
         System.out.print("""
