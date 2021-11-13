@@ -7,19 +7,19 @@ public class OpenHashTable<T>{
     nodeArray = new Node[D];
   }
   
-  public void insert(T data){
-    Node current = nodeArray[((int) data) % D];
+  public void insert(T, key, T value){
+    Node current = nodeArray[((int) key) % D];
     if(current != null){
       while(current.next != null){
         current = current.next;
       }
-    current.next = Node(data);
+    current.next = Node(key, value);
     }else{
-      current = Node(data);
+      current = Node(key, value);
     }
   }
-  public boolean search(T data){
-    Node current = d[((int) data) % D];
+  public boolean search(T key){
+    Node current = d[((int) key) % D];
     if(current == null){
       return false;
     }else{
@@ -48,8 +48,8 @@ public class OpenHashTable<T>{
     }
   }
   
-  public boolean remove(T data){
-    Node current = d[((int) data) % D];
+  public boolean remove(T key){
+    Node current = d[((int) key) % D];
     while(current != null){
       if(current.next.value.equals(value)){
         current.next = current.next.next;
@@ -60,10 +60,12 @@ public class OpenHashTable<T>{
   }
   
   class Node<T>{
-    T data;
+    T key;
+    T value;
     Node next;
-    public Node(T data){
-      this.data = data;
+    public Node(T key, T value){
+      this.key = key;
+      this.value = value;
       this.next = null;
     }
   }
