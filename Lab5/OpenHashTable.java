@@ -39,18 +39,18 @@ public class OpenHashTable<T> {
      * @param key key to find in OpenHashTable.
      * @return true if item is in the OpenHashTable.
      */
-    public boolean search(T key) {
+    public T search(T key) {
         HashTableNode current = nodeArray[((int) key) % D];
         if (current != null) {
             while (current.next != null) {
-                if (current.value.equals(key))
-                    return true;
+                if (current.key.equals(key))
+                    return (T) current.value;
                 else {
                     current = current.next;
                 }
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -62,10 +62,9 @@ public class OpenHashTable<T> {
             System.out.println("Row " + currentD + ":");
             if (current != null) {
                 while (current != null) {
-                    System.out.print(current.value);
+                    System.out.println("Key : " + current.key + " Value: " + current.value);
                     current = current.next;
                 }
-                System.out.println();
             }
             currentD++;
         }
@@ -80,9 +79,10 @@ public class OpenHashTable<T> {
         HashTableNode current = nodeArray[((int) key) % D];
         while (current != null) {
             if (current.next.value.equals(key)) {
-                current.next = current.next.next;
+
                 return true;
             }
+            current.next = current.next.next;
         }
         return false;
     }
