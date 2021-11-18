@@ -17,9 +17,15 @@ public class MinHeap {
         currentSize = 1;
     }
 
-    public void insert(int value, String name) {
+    /**
+     * Function to insert into a {@link MinHeap}.
+     *
+     * @param rank the rank of the node.
+     * @param name the node's name.
+     */
+    public void insert(int rank, String name) {
         if (currentSize < size) {
-            nodeArr[currentSize] = new HeapNode(value, name);
+            nodeArr[currentSize] = new HeapNode(rank, name);
             currentSize++;
             //while child bigger than parent
             int currentNode = currentSize;
@@ -33,9 +39,9 @@ public class MinHeap {
     }
 
     /**
-     * Sorts parent and child nodes.
+     * Swaps parent node and right child node.
      *
-     * @param current child to swap.
+     * @param current child node.
      */
     public void swapParentChildLeft(int current) {
         HeapNode child = nodeArr[current];
@@ -44,19 +50,16 @@ public class MinHeap {
 
     }
 
+    /**
+     * Swaps parent node and left child node.
+     *
+     * @param current child node.
+     */
     public void swapParentChildRight(int current) {
         HeapNode child = nodeArr[current];
         nodeArr[current] = nodeArr[current / 2 + 1];
         nodeArr[current / 2 + 1] = child;
     }
-
-
-    /**
-     * Function to insert into a {@link MinHeap}.
-     *
-     * @param current    the current node.
-     * @param insertNode the node to insert.
-     */
 
     /**
      * Gets if {@link MinHeap} is Empty
@@ -89,6 +92,11 @@ public class MinHeap {
         return current;
     }
 
+    /**
+     * Searches for Node.
+     *
+     * @param name name(key) to search for.
+     */
     public void search(String name) {
         for (HeapNode current : nodeArr) {
             if (current.name.equals(name)) {
@@ -101,6 +109,11 @@ public class MinHeap {
         return;
     }
 
+    /**
+     * Removes Given Node.
+     *
+     * @return true if node is removed.
+     */
     public boolean remove() {
         if (!isEmpty()) {
             HeapNode removeVal = nodeArr[1];
@@ -113,6 +126,11 @@ public class MinHeap {
         return false;
     }
 
+    /**
+     * Moves parent and child nodes so that the smaller node is on top.
+     *
+     * @param current Node to check. Starting out this is the first node.
+     */
     public void moveMin(int current) {
 
         HeapNode currentNode = nodeArr[current];
@@ -124,11 +142,11 @@ public class MinHeap {
             if ((currentNode.value > leftNode.value) || (currentNode.value > rightNode.value)) {
                 //if left node smaller than left node move left node up and check its children.
                 if (leftNode.value < rightNode.value) {
-                    swapParentChildLeft(current);
+                    swapParentChildLeft(current / 2);
                     moveMin(current / 2);
                     //else right is bigger than left or equal to.
                 } else {
-                    swapParentChildRight(current);
+                    swapParentChildRight(current / 2 + 1);
                     moveMin(current / 2 + 1);
                 }
 

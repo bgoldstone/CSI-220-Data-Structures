@@ -1,11 +1,18 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * A Tester class to test a {@link MinHeap} and an {@link OpenHashTable}.
+ */
 public class Lab5Tester {
     static Scanner scan;
     static MinHeap heap;
     static OpenHashTable hashTable;
 
+    /**
+     * Main Tester Method.
+     * @param args Arguments.
+     */
     public static void main(String[] args) {
         heap = new MinHeap(20);
         hashTable = new OpenHashTable(10);
@@ -32,6 +39,9 @@ public class Lab5Tester {
         }
     }
 
+    /**
+     * Gives user menu to modify {@link OpenHashTable}.
+     */
     private static void hashMenu() {
         char choice = '0';
         String key;
@@ -83,6 +93,9 @@ public class Lab5Tester {
         }
     }
 
+    /**
+     * Gives user menu to modify {@link MinHeap}.
+     */
     private static void heapMenu() {
         char choice = '0';
         String name;
