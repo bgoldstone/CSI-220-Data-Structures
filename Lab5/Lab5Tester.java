@@ -4,11 +4,11 @@ import java.util.Scanner;
 public class Lab5Tester {
     static Scanner scan;
     static MinHeap heap;
-    static OpenHashTable<String> hashTable;
+    static OpenHashTable hashTable;
 
     public static void main(String[] args) {
         heap = new MinHeap(20);
-        hashTable = new OpenHashTable<>(10);
+        hashTable = new OpenHashTable(10);
         scan = new Scanner(System.in);
         char dataStructure = '0';
         while (dataStructure != '3') {
@@ -46,7 +46,7 @@ public class Lab5Tester {
                     System.out.print("What key would you like to search for? ");
                     key = scan.nextLine();
                     String returnValue = hashTable.search(key);
-                    if (returnValue != "")
+                    if (!returnValue.equals(""))
                         System.out.println("The key " + key + " is in the OpenHashTable with the value " + returnValue);
                     else
                         System.out.println("The key " + key + "is not in the OpenHashTable");

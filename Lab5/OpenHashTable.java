@@ -1,7 +1,7 @@
 /**
  * Creates an object of an OpenHashTable.
  */
-public class OpenHashTable<T> {
+public class OpenHashTable {
     private final int D;
     private final HashTableNode[] nodeArray;
 
@@ -21,15 +21,16 @@ public class OpenHashTable<T> {
      * @param key   The key of the HashTableNode to insert.
      * @param value The value of the HashTableNode to insert.
      */
-    public void insert(T key, T value) {
-        HashTableNode current = nodeArray[((int) key) % D];
-        if (current != null) {
-            while (current.next != null) {
-                current = current.next;
-            }
-            current.next = new HashTableNode(key, value);
+    public void insert(String key, String value) {
+        HashTableNode row = nodeArray[(Integer.parseInt(key)) % D];
+        if (row == null) {
+            row = new HashTableNode(key, value);
         } else {
-            current = new HashTableNode(key, value);
+            while (row.next != null) {
+                row = row.next;
+            }
+            row.next = new HashTableNode(key, value);
+
         }
     }
 
@@ -39,14 +40,14 @@ public class OpenHashTable<T> {
      * @param key key to find in OpenHashTable.
      * @return true if item is in the OpenHashTable.
      */
-    public T search(T key) {
-        HashTableNode current = nodeArray[((int) key) % D];
-        if (current != null) {
-            while (current.next != null) {
-                if (current.key.equals(key))
-                    return (T) current.value;
+    public String search(String key) {
+        HashTableNode row = nodeArray[Integer.parseInt(key) % D];
+        if (row != null) {
+            while (row.next != null) {
+                if (row.key.equals(key))
+                    return row.value;
                 else {
-                    current = current.next;
+                    row = row.next;
                 }
             }
         }
@@ -75,8 +76,8 @@ public class OpenHashTable<T> {
      *
      * @param key key to remove from the OpenHashTable.
      */
-    public boolean remove(T key) {
-        HashTableNode current = nodeArray[((int) key) % D];
+    public boolean remove(String key) {
+        HashTableNode current = nodeArray[Integer.parseInt(key) % D];
         while (current != null) {
             if (current.next.value.equals(key)) {
 
@@ -90,9 +91,9 @@ public class OpenHashTable<T> {
     /**
      * Creates an object of a HashTableNode.
      */
-    class HashTableNode<T> {
-        T key;
-        T value;
+    class HashTableNode {
+        String key;
+        String value;
         HashTableNode next;
 
         /**
@@ -101,7 +102,7 @@ public class OpenHashTable<T> {
          * @param key   key to use in HashTableNode.
          * @param value value to use in HashTableNode.
          */
-        public HashTableNode(T key, T value) {
+        public HashTableNode(String key, String value) {
             this.key = key;
             this.value = value;
             this.next = null;
