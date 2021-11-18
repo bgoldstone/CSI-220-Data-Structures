@@ -138,10 +138,10 @@ public class MinHeap {
         HeapNode currentNode = nodeArr[current];
         HeapNode leftNode = nodeArr[current / 2];
         HeapNode rightNode = nodeArr[current / 2 + 1];
-        /* if left child is greater than or equal to size or
+        /* if left child is greater than or equal to size and
          * if right child is bigger or equal to size, it must be a leaf.
          */
-        if (!(current / 2 >= currentSize || current / 2 + 1 >= currentSize)) {
+        if (!(current / 2 >= currentSize && current / 2 + 1 >= currentSize)) {
             //if parent bigger than any of its children
             if ((currentNode.value > leftNode.value) || (currentNode.value > rightNode.value)) {
                 //if left node smaller than left node move left node up and check its children.
