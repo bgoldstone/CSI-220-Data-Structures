@@ -143,8 +143,6 @@ public class MinHeap {
     class HeapNode {
         int value;
         String name;
-        int left;
-        int right;
 
         /**
          * Constructor for a {@link HeapNode}.
@@ -155,8 +153,6 @@ public class MinHeap {
         public HeapNode(int value, String name) {
             this.value = value;
             this.name = name;
-            this.left = 2 * currentSize;
-            this.right = (2 * currentSize) + 1;
         }
 
     }
