@@ -46,6 +46,7 @@ public class MinHeap {
     public void swapParentChildLeft(int current) {
         HeapNode child = nodeArr[current];
         nodeArr[current] = nodeArr[current / 2];
+        //parent Node
         nodeArr[current / 2] = child;
 
     }
@@ -58,6 +59,7 @@ public class MinHeap {
     public void swapParentChildRight(int current) {
         HeapNode child = nodeArr[current];
         nodeArr[current] = nodeArr[current / 2 + 1];
+        //parent node
         nodeArr[current / 2 + 1] = child;
     }
 
@@ -136,8 +138,10 @@ public class MinHeap {
         HeapNode currentNode = nodeArr[current];
         HeapNode leftNode = nodeArr[current / 2];
         HeapNode rightNode = nodeArr[current / 2 + 1];
-        //if current node is not a leaf
-        if (current > currentSize || current < (currentSize / 2)) {
+        /* if left child is greater than or equal to size or
+         * if left child is bigger or equal to size, it must be a leaf.
+         */
+        if (!(current / 2 >= currentSize || current / 2 + 1 >= currentSize)) {
             //if parent bigger than any of its children
             if ((currentNode.value > leftNode.value) || (currentNode.value > rightNode.value)) {
                 //if left node smaller than left node move left node up and check its children.
