@@ -2,7 +2,6 @@
  * Creates an object of a MinHeap where the smaller the number, the higher the priority.
  */
 public class MinHeap {
-    private HeapNode root;
     private HeapNode nodeArr[];
     private final int size;
     private int currentSize;
@@ -11,9 +10,8 @@ public class MinHeap {
      * Constructor for a {@link MinHeap}.
      */
     public MinHeap(int size) {
-        root = null;
-        this.size = size;
-        nodeArr = new HeapNode[size + 1];
+        this.size = size + 1;
+        nodeArr = new HeapNode[size];
         currentSize = 1;
     }
 
@@ -24,16 +22,26 @@ public class MinHeap {
      * @param name the node's name.
      */
     public void insert(int rank, String name) {
-        if (currentSize < size) {
+        if (isEmpty()) {
             nodeArr[currentSize] = new HeapNode(rank, name);
             currentSize++;
+            return;
+        }
+        if (currentSize < size) {
+            nodeArr[currentSize] = new HeapNode(rank, name);
+
             //while child bigger than parent
             int currentNode = currentSize;
             //makes its way up the tree to make sure it is following BinaryTree rules.
             while (nodeArr[currentNode].value < nodeArr[currentNode / 2].value) {
-                swapParentChildLeft(currentNode);
-                currentNode = currentNode / 2;
+                if (currentNode == 1)
+                    break;
+                if (currentNode % 2 == 0)
+                    swapParentChildLeft(currentNode);
+                else if (currentNode % 2 == 1)
+                    swapParentChildRight(currentNode);
             }
+            currentSize++;
         } else
             System.out.println("Heap is Full!");
     }
@@ -69,29 +77,18 @@ public class MinHeap {
      * @return true if {@link MinHeap} is empty.
      */
     public boolean isEmpty() {
-        return root == null;
+        return nodeArr[1] == null;
     }
 
     /**
      * Displays all of the {@link HeapNode} in the {@link MinHeap}.
      */
     public void display() {
-        displayRecursive(1);
-    }
-
-    /**
-     * Traverses {@link MinHeap} inOrder.
-     *
-     * @param current Root node for first iteration.
-     * @return {@link HeapNode}.
-     */
-    public int displayRecursive(int current) {
-        if (current >= currentSize)
-            return 1;
-        displayRecursive(current * 2);
-        System.out.println("Guest Name: " + nodeArr[current].name + " Rank: " + nodeArr[current].value);
-        displayRecursive((current * 2) + 1);
-        return current;
+        for (int i = 1; i < nodeArr.length; i++) {
+            if (nodeArr[i] == null)
+                break;
+            System.out.println(nodeArr[i].toString());
+        }
     }
 
     /**
@@ -99,16 +96,21 @@ public class MinHeap {
      *
      * @param name name(key) to search for.
      */
-    public void search(String name) {
-        for (HeapNode current : nodeArr) {
+    public boolean search(String name) {
+        if (isEmpty()) {
+            System.out.println("Heap is Empty!");
+            return false;
+        }
+        for (int i = 0; i < currentSize; i++) {
+            HeapNode current = nodeArr[currentSize];
             if (current.name.equals(name)) {
                 System.out.println("Guest Found!");
                 System.out.println("Guest Name: " + current.name + " Rank: " + current.value);
-                return;
+                return true;
             }
         }
         System.out.println("Guest not found!");
-        return;
+        return false;
     }
 
     /**
@@ -119,7 +121,13 @@ public class MinHeap {
     public boolean remove() {
         if (!isEmpty()) {
             HeapNode removeVal = nodeArr[1];
-            nodeArr[1] = nodeArr[currentSize];
+            if (removeVal.name == "") {
+                currentSize--;
+                return false;
+            }
+            nodeArr[1] = nodeArr[currentSize - 1];
+            nodeArr[currentSize - 1] = null;
+
             currentSize--;
             moveMin(1);
             System.out.println("Guest Name: " + removeVal.name + " Priority: " + removeVal.value);
@@ -136,6 +144,8 @@ public class MinHeap {
     public void moveMin(int current) {
 
         HeapNode currentNode = nodeArr[current];
+        if (currentNode == null)
+            return;
         HeapNode leftNode = nodeArr[current / 2];
         HeapNode rightNode = nodeArr[current / 2 + 1];
         /* if left child is greater than or equal to size and
@@ -143,6 +153,8 @@ public class MinHeap {
          */
         if (!(current / 2 >= currentSize && current / 2 + 1 >= currentSize)) {
             //if parent bigger than any of its children
+            if (leftNode == null || rightNode == null)
+                return;
             if ((currentNode.value > leftNode.value) || (currentNode.value > rightNode.value)) {
                 //if left node smaller than left node move left node up and check its children.
                 if (leftNode.value < rightNode.value) {
@@ -175,6 +187,10 @@ public class MinHeap {
         public HeapNode(int value, String name) {
             this.value = value;
             this.name = name;
+        }
+
+        public String toString() {
+            return "Guest Name: " + name + " Priority: " + value;
         }
 
     }

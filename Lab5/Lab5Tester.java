@@ -19,8 +19,16 @@ public class Lab5Tester {
         scan = new Scanner(System.in);
         char dataStructure = '0';
         while (dataStructure != '3') {
-            System.out.print("Please Choose a data structure: \n1. Hash\n2. Heap\n3. Exit\nEnter (1,2,3)");
-            dataStructure = scan.nextLine().charAt(0);
+            System.out.print("Please Choose a data structure: \n1. Hash\n2. Heap\n3. Exit\nEnter (1,2,3): ");
+            try {
+                dataStructure = scan.nextLine().charAt(0);
+            } catch (StringIndexOutOfBoundsException e) {
+                dataStructure = '5';
+
+            }
+
+
+
             System.out.println();
             switch (dataStructure) {
                 case '1':
@@ -48,7 +56,12 @@ public class Lab5Tester {
         String value;
         while (choice != '5') {
             System.out.print("\nWhat would you like to do?\n\t1. Search\n\t2. Insert\n\t3. Remove\n\t4. Display\n\t5. Return\nEnter an option(1,2,3,4,5): ");
-            choice = scan.nextLine().charAt(0);
+            try {
+                choice = scan.nextLine().charAt(0);
+            } catch (StringIndexOutOfBoundsException e) {
+                choice = '6';
+
+            }
             System.out.println();
 
             switch (choice) {
@@ -56,10 +69,10 @@ public class Lab5Tester {
                     System.out.print("What key would you like to search for? ");
                     key = scan.nextLine();
                     String returnValue = hashTable.search(key);
-                    if (!returnValue.equals(""))
+                    if (returnValue != null)
                         System.out.println("The key " + key + " is in the OpenHashTable with the value " + returnValue);
                     else
-                        System.out.println("The key " + key + "is not in the OpenHashTable");
+                        System.out.println("The key " + key + " is not in the OpenHashTable");
                     break;
                 case '2':
                     System.out.print("What key would you like to insert? ");
@@ -102,12 +115,17 @@ public class Lab5Tester {
         int priority;
         while (choice != '5') {
             System.out.print("\nWhat would you like to do?\n\t1. Search by name\n\t2. Insert new element\n\t3. Remove next guest\n\t4. Display all names and their ranking\n\t5. Return\nEnter an option(1,2,3,4,5): ");
-            choice = scan.nextLine().charAt(0);
+            try {
+                choice = scan.nextLine().charAt(0);
+            } catch (StringIndexOutOfBoundsException e) {
+                choice = '6';
+
+            }
             System.out.println();
 
             switch (choice) {
                 case '1':
-                    System.out.print("What Guest would you like to search for?");
+                    System.out.print("What Guest would you like to search for? ");
                     heap.search(scan.nextLine());
                     System.out.println();
                     break;
