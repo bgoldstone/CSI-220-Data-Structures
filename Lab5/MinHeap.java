@@ -12,7 +12,7 @@ public class MinHeap {
     public MinHeap(int size) {
         this.size = size + 1;
         nodeArr = new HeapNode[size];
-        currentSize = 1;
+        currentSize = 0;
     }
 
     /**
@@ -23,11 +23,12 @@ public class MinHeap {
      */
     public void insert(int rank, String name) {
         if (isEmpty()) {
-            nodeArr[currentSize] = new HeapNode(rank, name);
             currentSize++;
+            nodeArr[currentSize] = new HeapNode(rank, name);
             return;
         }
         if (currentSize < size) {
+            currentSize++;
             nodeArr[currentSize] = new HeapNode(rank, name);
 
             //while child bigger than parent
@@ -41,7 +42,6 @@ public class MinHeap {
                 else if (currentNode % 2 == 1)
                     swapParentChildRight(currentNode);
             }
-            currentSize++;
         } else
             System.out.println("Heap is Full!");
     }
@@ -101,8 +101,9 @@ public class MinHeap {
             System.out.println("Heap is Empty!");
             return false;
         }
-        for (int i = 0; i < currentSize; i++) {
-            HeapNode current = nodeArr[currentSize];
+        HeapNode current;
+        for (int i = 1; i < currentSize+1; i++) {
+            current = nodeArr[i];
             if (current.name.equals(name)) {
                 System.out.println("Guest Found!");
                 System.out.println("Guest Name: " + current.name + " Rank: " + current.value);
