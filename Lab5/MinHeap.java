@@ -119,7 +119,7 @@ public class MinHeap {
             nodeArr[currentSize] = null;
 
             currentSize--;
-            downHeap(1);
+            downHeap();
             System.out.println("Guest Name: " + removeVal.name + " Priority: " + removeVal.value);
             return true;
         }
@@ -131,30 +131,35 @@ public class MinHeap {
      *
      * @param current Node to check. Starting out this is the first node.
      */
-    public void downHeap(int current) {
+    public void downHeap(){
 
-        HeapNode currentNode = nodeArr[current];
-        if (currentNode == null)
-            return;
-        int leftNode = current * 2;
-        int rightNode = current * 2 + 1;
-        if (current < currentSize) {
-            //if right smaller than left and parent bigger than right
-            if (nodeArr[leftNode] == null || nodeArr[rightNode] == null)
-                return;
-            if ((nodeArr[rightNode].value < nodeArr[leftNode].value) && (currentNode.value > nodeArr[rightNode].value)) {
-                swapParentChild(rightNode);
-                downHeap(rightNode);
-                //if left smaller than right and parent bigger than left
-            } else if ((nodeArr[leftNode].value < nodeArr[rightNode].value) && (currentNode.value > nodeArr[rightNode].value)) {
-                swapParentChild(leftNode);
-                downHeap(leftNode);
-            } else
-                return;
-        }
-
-
+       int i = 1;
+       while(i < nodeArr.length) {
+        	 HeapNode currentNode = nodeArr[i];
+             if (currentNode == null)
+                 return;
+             int leftNode = i * 2;
+             int rightNode = i * 2 + 1;
+             if (nodeArr[leftNode] == null)
+                 return;
+             if(nodeArr[leftNode].value < currentNode.value && nodeArr[rightNode] == null) {
+            	 swapParentChild(leftNode);
+            	 i*=2;
+             } else if(nodeArr[leftNode].value >= currentNode.value &&(nodeArr[rightNode] == null)) {
+            	 return;
+             }
+             else if ((nodeArr[rightNode].value < nodeArr[leftNode].value) && (currentNode.value > nodeArr[rightNode].value)) {
+                 swapParentChild(rightNode);
+                 i = (i*2) +1;
+                 //if left smaller than right and parent bigger than left
+             } else if ((nodeArr[leftNode].value < nodeArr[rightNode].value) && (currentNode.value > nodeArr[leftNode].value)) {
+                 swapParentChild(leftNode);
+                 i*=2;
+             } else
+                 return;
+		}
     }
+
 
 
     /**
