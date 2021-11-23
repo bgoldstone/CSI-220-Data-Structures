@@ -26,6 +26,7 @@ public class OpenHashTable {
         HashTableNode current = nodeArray[getAsciiValue(key) % D];
         if(search(key) != null){
             System.out.println("Key already exists!");
+            return;
         }
         if (current == null) {
             nodeArray[getAsciiValue(key) % D] = newNode;
@@ -57,8 +58,6 @@ public class OpenHashTable {
         HashTableNode current = nodeArray[getAsciiValue(key) % D];
         if (current != null) {
             while (current != null) {
-                System.out.println(key);
-                System.out.println(current.key);
                 if (current.key.equals(key))
                     return current.value;
                 else {
