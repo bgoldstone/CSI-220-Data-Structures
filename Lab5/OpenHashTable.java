@@ -24,15 +24,15 @@ public class OpenHashTable {
     public void insert(String key, String value) {
         HashTableNode newNode = new HashTableNode(key, value);
         HashTableNode current = nodeArray[getAsciiValue(key) % D];
-        if(search(key) != null){
+        if (search(key) != null) {
             System.out.println("Key already exists!");
             return;
         }
         if (current == null) {
             nodeArray[getAsciiValue(key) % D] = newNode;
-        } else if(current.next == null) {
-            current.next = new HashTableNode(key,value);
-        }else{
+        } else if (current.next == null) {
+            current.next = new HashTableNode(key, value);
+        } else {
             while (current.next.next != null) {
                 current = current.next;
             }
@@ -94,26 +94,27 @@ public class OpenHashTable {
     public boolean remove(String key) {
         int asciiValue = getAsciiValue(key) % D;
         HashTableNode current = nodeArray[asciiValue];
-        if(current == null){
+        if (current == null) {
             return false;
         }
         //if first node
-        if (current.value.equals(key)) {
+        if (current.key.equals(key)) {
             nodeArray[asciiValue] = current.next;
             return true;
         }
 
         while (current.next != null) {
-            if (current.next.value.equals(key)) {
+            if (current.next.key.equals(key)) {
                 if (current.next.next != null)
                     current.next = current.next.next;
                 else
                     current.next = null;
                 return true;
-            }
-            if (current.next != null)
-                current.next = null;
-            current = current.next;
+            } else if (current.next == null) {
+                current = null;
+
+            } else
+                current = current.next;
         }
 
 
