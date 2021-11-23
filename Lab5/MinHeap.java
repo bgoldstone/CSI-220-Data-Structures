@@ -43,22 +43,7 @@ public class MinHeap {
                     if (currentNode / 2 < 1 || !(currentNode > 1)) {
                         return;
                     }
-//                    if(nodeArr[currentSize-1].value > nodeArr[currentSize].value){
-//                        HeapNode lastNode = nodeArr[currentSize];
-//                        nodeArr[currentSize] = nodeArr[currentSize-1];
-//                        nodeArr[currentSize-1] = lastNode;
-//                    }
                 }
-//                if(nodeArr[currentSize-1].value > nodeArr[currentSize].value){
-//                    HeapNode lastNode = nodeArr[currentSize];
-//                    nodeArr[currentSize] = nodeArr[currentSize-1];
-//                    nodeArr[currentSize-1] = lastNode;
-//                }
-//                if(nodeArr[currentSize-2].value > nodeArr[currentSize-1].value){
-//                    HeapNode lastNode = nodeArr[currentSize-1];
-//                    nodeArr[currentSize-1] = nodeArr[currentSize-2];
-//                    nodeArr[currentSize-2] = lastNode;
-//                }
             }
         } else
             System.out.println("Heap is Full!");
@@ -134,7 +119,7 @@ public class MinHeap {
             nodeArr[currentSize] = null;
 
             currentSize--;
-            moveMin(1);
+            downHeap(1);
             System.out.println("Guest Name: " + removeVal.name + " Priority: " + removeVal.value);
             return true;
         }
@@ -146,35 +131,31 @@ public class MinHeap {
      *
      * @param current Node to check. Starting out this is the first node.
      */
-    public void moveMin(int current) {
+    public void downHeap(int current) {
 
         HeapNode currentNode = nodeArr[current];
         if (currentNode == null)
             return;
-        HeapNode leftNode = nodeArr[current / 2];
-        HeapNode rightNode = nodeArr[current / 2 + 1];
-        /* if left child is greater than or equal to size and
-         * if right child is bigger or equal to size, it must be a leaf.
-         */
-        if (!(currentSize > (current / 2) && currentSize <= current)) {
-            //if parent bigger than any of its children
-            if (leftNode == null || rightNode == null)
+        int leftNode = current * 2;
+        int rightNode = current * 2 + 1;
+        if (current < currentSize) {
+            //if right smaller than left and parent bigger than right
+            if (nodeArr[leftNode] == null || nodeArr[rightNode] == null)
                 return;
-            if ((currentNode.value > leftNode.value) || (currentNode.value > rightNode.value)) {
-                //if left node smaller than left node move left node up and check its children.
-                if (leftNode.value < rightNode.value) {
-                    swapParentChild(current * 2);
-                    moveMin(current * 2);
-                    //else right is bigger than left or equal to.
-                } else {
-                    swapParentChild((current * 2) + 1);
-                    moveMin((current * 2) + 1);
-                }
-
-            }
-
+            if ((nodeArr[rightNode].value < nodeArr[leftNode].value) && (currentNode.value > nodeArr[rightNode].value)) {
+                swapParentChild(rightNode);
+                downHeap(rightNode);
+                //if left smaller than right and parent bigger than left
+            } else if ((nodeArr[leftNode].value < nodeArr[rightNode].value) && (currentNode.value > nodeArr[rightNode].value)) {
+                swapParentChild(leftNode);
+                downHeap(leftNode);
+            } else
+                return;
         }
+
+
     }
+
 
     /**
      * Creates an object of a {@link HeapNode}.
