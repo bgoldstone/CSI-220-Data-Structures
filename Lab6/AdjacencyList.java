@@ -91,7 +91,7 @@ public class AdjacencyList {
         int pos = 0;
         while (pos != visited.length - 1 || firstTime) {
             current = stack.pop();
-            if (Arrays.binarySearch(visited,current) < 0) {
+            if (Arrays.binarySearch(visited, current) < 0) {
                 currentNode = nodeArray[current];
                 visited[++pos] = current;
                 while (currentNode != null) {
@@ -107,6 +107,25 @@ public class AdjacencyList {
      * Displays Breath First Search Algorithm on AdjacencyList
      */
     public void displayBFS() {
+        int[] visited = new int[numOfNodes];
+        Queue queue = new Queue(numOfNodes);
+        queue.enqueue(0);
+        int current;
+        GraphNode currentNode;
+        boolean firstTime = true;
+        int pos = 0;
+        while (pos != visited.length - 1 || firstTime) {
+            current = queue.dequeue();
+            if (Arrays.binarySearch(visited, current) < 0) {
+                currentNode = nodeArray[current];
+                visited[++pos] = current;
+                while (currentNode != null) {
+                    queue.enqueue(currentNode.to);
+                }
+            }
+            firstTime = false;
+        }
+        System.out.println(Arrays.toString(visited));
 
     }
 
