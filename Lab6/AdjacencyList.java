@@ -82,17 +82,25 @@ public class AdjacencyList {
      * Displays Depth First Search Algorithm on AdjacencyList
      */
     public void displayDFS() {
-        boolean[] visited = new boolean[numOfNodes];
-        boolean[] compare = new boolean[numOfNodes];
-        for (int i = 0; i < compare.length; i++) {
-            compare[i] = true;
-        }
+        int[] visited = new int[numOfNodes];
         Stack<Integer> stack = new Stack(numOfNodes);
         stack.push(0);
-        while(!Arrays.equals(visited,compare)) {
-            stack.pop();
+        int current;
+        GraphNode currentNode;
+        boolean firstTime = true;
+        int pos = 0;
+        while (pos != visited.length - 1 || firstTime) {
+            current = stack.pop();
+            if (Arrays.binarySearch(visited,current) < 0) {
+                currentNode = nodeArray[current];
+                visited[++pos] = current;
+                while (currentNode != null) {
+                    stack.push(currentNode.to);
+                }
+            }
+            firstTime = false;
         }
-
+        System.out.println(Arrays.toString(visited));
     }
 
     /**

@@ -16,7 +16,7 @@ public class Lab6Tester {
                   2. DFS and BFS
                   3. Load new File
                   4. Exit
-                Enter an Option(1,2,3,4): """;
+                Enter an Option(1,2,3,4):\s""";
         char choice = '0';
         while (choice != '4') {
             System.out.print(prompt);
@@ -51,11 +51,6 @@ public class Lab6Tester {
         list.displayDFS();
         //display BFS
         list.displayBFS();
-
-        boolean[] visisted = new boolean[list.getNumOfNodes()];
-        for (boolean bool: visisted){
-            System.out.println(bool);
-        }
     }
 
     private static void findShortestPath() {

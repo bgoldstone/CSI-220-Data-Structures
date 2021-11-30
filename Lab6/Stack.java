@@ -1,4 +1,4 @@
-public class Stack<T> implements StackInterface<T> {
+public class Stack<T>{
     private LinkedList<T> stack;
     private int maxSize;
 
