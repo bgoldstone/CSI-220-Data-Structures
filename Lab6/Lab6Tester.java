@@ -91,11 +91,12 @@ public class Lab6Tester {
         int numOfNodes = Integer.parseInt(firstLine[0]);
         int numOfEdges = Integer.parseInt(firstLine[1]);
         list = new AdjacencyList(numOfNodes);
-        String[] current = new String[3];
+        String[] current;
         for (int i = 0; i < numOfEdges; i++) {
             current = scan.nextLine().split(" ");
             list.insert(Integer.parseInt(current[0]), Integer.parseInt(current[1]), Integer.parseInt(current[2]));
         }
         list.display();
+        file.close();
     }
 }

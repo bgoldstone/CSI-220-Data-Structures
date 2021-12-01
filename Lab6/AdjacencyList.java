@@ -85,7 +85,7 @@ public class AdjacencyList {
      */
     public void displayDFS() {
         int[] visited = new int[numOfNodes];
-        Stack<Integer> stack = new Stack(numOfNodes);
+        Stack<Integer> stack = new Stack<>(numOfNodes);
         stack.push(0);
         int current;
         GraphNode currentNode;
@@ -98,6 +98,7 @@ public class AdjacencyList {
                 visited[++pos] = current;
                 while (currentNode != null) {
                     stack.push(currentNode.to);
+                    currentNode = currentNode.next;
                 }
             }
             firstTime = false;
@@ -123,6 +124,7 @@ public class AdjacencyList {
                 visited[++pos] = current;
                 while (currentNode != null) {
                     queue.enqueue(currentNode.to);
+                    currentNode = currentNode.next;
                 }
             }
             firstTime = false;
@@ -135,7 +137,7 @@ public class AdjacencyList {
      * Dijkstra's Algorithm from a node to another node.
      * @param startNode The node number to start with.
      * @param endNode The node number to end with.
-     * @return String with Shortest Path.
+     * @return String with the shortest Path.
      */
     public String findShortestPath(int startNode, int endNode){
         StringBuilder sb = new StringBuilder("The shortest path from ");
