@@ -2,22 +2,23 @@ import java.util.Arrays;
 
 /**
  * Creates an object of an AdjacencyList for a Graph.
+ *
  * @author Ben Goldstone
  * @version 11/30/2021
  */
 public class AdjacencyList {
 
-    private final int numOfNodes;
-    private final GraphNode[] nodeArray;
+    private final int numberOfNodes;
+    private final GraphNode[] graphNodes;
 
     /**
      * Constructor for a {@link AdjacencyList}.
      *
-     * @param numOfNodes number of Nodes in the AdjacencyList.
+     * @param numberOfNodes number of Nodes in the AdjacencyList.
      */
-    public AdjacencyList(int numOfNodes) {
-        this.numOfNodes = numOfNodes;
-        nodeArray = new GraphNode[numOfNodes];
+    public AdjacencyList(int numberOfNodes) {
+        this.numberOfNodes = numberOfNodes;
+        graphNodes = new GraphNode[numberOfNodes];
     }
 
     /**
@@ -29,9 +30,9 @@ public class AdjacencyList {
      */
     public void insert(int to, int from, int weight) {
         GraphNode newNode = new GraphNode(to, weight);
-        GraphNode current = nodeArray[from];
+        GraphNode current = graphNodes[from];
         if (current == null) {
-            nodeArray[from] = newNode;
+            graphNodes[from] = newNode;
         } else if (current.next == null) {
             current.next = new GraphNode(to, weight);
         } else {
@@ -67,7 +68,7 @@ public class AdjacencyList {
      */
     public void display() {
         int currentNode = 0;
-        for (GraphNode current : nodeArray) {
+        for (GraphNode current : graphNodes) {
             System.out.println("Node " + currentNode + ":");
             if (current != null) {
                 while (current != null) {
@@ -84,8 +85,8 @@ public class AdjacencyList {
      * Displays Depth First Search Algorithm on AdjacencyList
      */
     public void displayDFS() {
-        int[] visited = new int[numOfNodes];
-        Stack<Integer> stack = new Stack<>(numOfNodes);
+        int[] visited = new int[numberOfNodes];
+        Stack<Integer> stack = new Stack<>(numberOfNodes);
         stack.push(0);
         int current;
         GraphNode currentNode;
@@ -94,7 +95,7 @@ public class AdjacencyList {
         while (pos != visited.length - 1 || firstTime) {
             current = stack.pop();
             if (Arrays.binarySearch(visited, current) < 0) {
-                currentNode = nodeArray[current];
+                currentNode = graphNodes[current];
                 visited[++pos] = current;
                 while (currentNode != null) {
                     stack.push(currentNode.to);
@@ -110,8 +111,8 @@ public class AdjacencyList {
      * Displays Breath First Search algorithm on AdjacencyList
      */
     public void displayBFS() {
-        int[] visited = new int[numOfNodes];
-        Queue queue = new Queue(numOfNodes);
+        int[] visited = new int[numberOfNodes];
+        Queue queue = new Queue(numberOfNodes);
         queue.enqueue(0);
         int current;
         GraphNode currentNode;
@@ -120,7 +121,7 @@ public class AdjacencyList {
         while (pos != visited.length - 1 || firstTime) {
             current = queue.dequeue();
             if (Arrays.binarySearch(visited, current) < 0) {
-                currentNode = nodeArray[current];
+                currentNode = graphNodes[current];
                 visited[++pos] = current;
                 while (currentNode != null) {
                     queue.enqueue(currentNode.to);
@@ -135,16 +136,73 @@ public class AdjacencyList {
 
     /**
      * Dijkstra's Algorithm from a node to another node.
+     *
      * @param startNode The node number to start with.
-     * @param endNode The node number to end with.
+     * @param endNode   The node number to end with.
      * @return String with the shortest Path.
      */
-    public String findShortestPath(int startNode, int endNode){
+    public String findShortestPath(int startNode, int endNode) {
         StringBuilder sb = new StringBuilder("The shortest path from ");
         sb.append(startNode);
         sb.append(" to ");
         sb.append(endNode);
         sb.append(" is: ");
+        ShortestPathNode[] knownNodes = new ShortestPathNode[numberOfNodes];
+        MinHeap unknownNodes = new MinHeap(numberOfNodes);
+        ShortestPathNode currentShortestPathNode;
+        ShortestPathNode toNode;
+        GraphNode currentGraphNode;
+        int currentNodeNumber;
+        //insert all node into MinHeap
+        for (int i = 0; i < graphNodes.length; i++) {
+            if (i == startNode)
+                unknownNodes.insert(new ShortestPathNode(i, 0));
+            else
+                unknownNodes.insert(new ShortestPathNode(i));
+        }
+        while (!unknownNodes.isEmpty()) {
+            currentShortestPathNode = unknownNodes.remove();
+            currentNodeNumber = currentShortestPathNode.nodeNumber;
+            currentGraphNode = graphNodes[currentNodeNumber];
+            while (currentGraphNode != null) {
+                toNode = unknownNodes.getShortestPathNode(currentGraphNode.to);
+                //set distanceFromStart and previousNode values
+                if (toNode.distanceFromStart == -1 || toNode.distanceFromStart > currentGraphNode.weight) {
+                    if (toNode.distanceFromStart == 0) {
+                        toNode.distanceFromStart = currentGraphNode.weight;
+                        toNode.previousNode = currentNodeNumber;
+                    } else {
+                        toNode.distanceFromStart += currentGraphNode.weight;
+                        toNode.previousNode = currentNodeNumber;
+                    }
+                }
+                currentGraphNode = currentGraphNode.next;
+            }
+            currentShortestPathNode.known = true;
+            knownNodes[currentNodeNumber] = currentShortestPathNode;
+        }
+        currentNodeNumber = endNode;
+        currentShortestPathNode = knownNodes[endNode];
+        String[] nodePath = new String[numberOfNodes];
+        int i = numberOfNodes;
+        sb.append("from: ");
+        sb.append(startNode);
+        sb.append("\n");
+        while (true) {
+            int weight = currentShortestPathNode.distanceFromStart;
+            nodePath[--i] = "To Node " + currentNodeNumber + " with a total distance of " + weight;
+            currentNodeNumber = currentShortestPathNode.previousNode;
+            currentShortestPathNode = knownNodes[currentNodeNumber];
+            if (currentShortestPathNode.previousNode == -1)
+                break;
+        }
+        for (String node : nodePath) {
+            if (node != null && !node.equals("")) {
+                sb.append(node);
+                sb.append("\n");
+            }
+        }
+
         return sb.toString();
     }
 
