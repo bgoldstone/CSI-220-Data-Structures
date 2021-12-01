@@ -28,7 +28,7 @@ public class AdjacencyList {
      * @param from   The Current Node.
      * @param weight The weight of the edge between the Nodes.
      */
-    public void insert(int to, int from, int weight) {
+    public void insert(int from, int to, int weight) {
         GraphNode newNode = new GraphNode(to, weight);
         GraphNode current = graphNodes[from];
         if (current == null) {
@@ -36,7 +36,7 @@ public class AdjacencyList {
         } else if (current.next == null) {
             current.next = new GraphNode(to, weight);
         } else {
-            while (current.next.next != null) {
+            while (current.next != null) {
                 current = current.next;
             }
             current.next = new GraphNode(to, weight);
@@ -92,7 +92,7 @@ public class AdjacencyList {
         GraphNode currentNode;
         boolean firstTime = true;
         int pos = 0;
-        while (pos != visited.length - 1 || firstTime) {
+        while ((pos != visited.length - 1 || firstTime) && !stack.isEmpty()) {
             current = stack.pop();
             if (Arrays.binarySearch(visited, current) < 0) {
                 currentNode = graphNodes[current];
@@ -142,6 +142,10 @@ public class AdjacencyList {
      * @return String with the shortest Path.
      */
     public String findShortestPath(int startNode, int endNode) {
+        if (startNode < 0 || startNode >= numberOfNodes || endNode < 0 || endNode >= numberOfNodes) {
+            System.out.println("Index out of Bounds!");
+            return "";
+        }
         StringBuilder sb = new StringBuilder("The shortest path from ");
         sb.append(startNode);
         sb.append(" to ");
@@ -167,15 +171,16 @@ public class AdjacencyList {
             while (currentGraphNode != null) {
                 toNode = unknownNodes.getShortestPathNode(currentGraphNode.to);
                 //set distanceFromStart and previousNode values
-                if (toNode.distanceFromStart == -1 || toNode.distanceFromStart > currentGraphNode.weight) {
-                    if (toNode.distanceFromStart == 0) {
-                        toNode.distanceFromStart = currentGraphNode.weight;
-                        toNode.previousNode = currentNodeNumber;
-                    } else {
-                        toNode.distanceFromStart += currentGraphNode.weight;
-                        toNode.previousNode = currentNodeNumber;
+                if (toNode != null)
+                    if (toNode.distanceFromStart == -1 || toNode.distanceFromStart > currentGraphNode.weight) {
+                        if (toNode.distanceFromStart == 0) {
+                            toNode.distanceFromStart = currentGraphNode.weight;
+                            toNode.previousNode = currentNodeNumber;
+                        } else {
+                            toNode.distanceFromStart += currentGraphNode.weight;
+                            toNode.previousNode = currentNodeNumber;
+                        }
                     }
-                }
                 currentGraphNode = currentGraphNode.next;
             }
             currentShortestPathNode.known = true;
@@ -189,9 +194,14 @@ public class AdjacencyList {
         sb.append(startNode);
         sb.append("\n");
         while (true) {
+
             int weight = currentShortestPathNode.distanceFromStart;
+            if(i-1 == -1)
+                continue;
             nodePath[--i] = "To Node " + currentNodeNumber + " with a total distance of " + weight;
             currentNodeNumber = currentShortestPathNode.previousNode;
+            if(currentNodeNumber < 0)
+                continue;
             currentShortestPathNode = knownNodes[currentNodeNumber];
             if (currentShortestPathNode.previousNode == -1)
                 break;

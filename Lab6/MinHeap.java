@@ -10,9 +10,9 @@ public class MinHeap {
      * Constructor for a {@link MinHeap}.
      */
     public MinHeap(int size) {
-        this.size = size + 1;
+        this.size = size;
         nodeArr = new ShortestPathNode[size];
-        currentSize = 0;
+        currentSize = -1;
     }
 
     /**
@@ -109,7 +109,6 @@ public class MinHeap {
         if (!isEmpty()) {
             ShortestPathNode removeVal = nodeArr[1];
             if (removeVal.nodeNumber < 0) {
-                currentSize--;
                 return null;
             }
             nodeArr[1] = nodeArr[currentSize];

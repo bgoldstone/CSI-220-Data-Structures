@@ -93,7 +93,7 @@ public class Lab6Tester {
         list = new AdjacencyList(numOfNodes);
         String[] current;
         for (int i = 0; i < numOfEdges; i++) {
-            current = scan.nextLine().split(" ");
+            current = file.nextLine().split(" ");
             list.insert(Integer.parseInt(current[0]), Integer.parseInt(current[1]), Integer.parseInt(current[2]));
         }
         list.display();
