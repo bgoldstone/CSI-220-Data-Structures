@@ -130,6 +130,14 @@ public class AdjacencyList {
         System.out.println(Arrays.toString(visited));
 
     }
+    public String findShortestPath(int startNode, int endNode){
+        StringBuilder sb = new StringBuilder("The shortest path from ");
+        sb.append(startNode);
+        sb.append(" to ");
+        sb.append(endNode);
+        sb.append(" is: ");
+        return sb.toString();
+    }
 
 //    /**
 //     * Removes the given HashNode from the OpenHashTable.

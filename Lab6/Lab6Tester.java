@@ -34,7 +34,10 @@ public class Lab6Tester {
                         System.out.print("What node number would you like to end with? ");
                         System.out.println();
                         int endNode = Integer.parseInt(scan.nextLine());
-                        findShortestPath(startNode, endNode);
+                        if (list == null)
+                            System.out.println("List Is Empty!");
+                        else
+                            System.out.println(list.findShortestPath(startNode, endNode));
                     } catch (NumberFormatException e) {
                         System.out.println("Data Type is not an Integer");
                     }
@@ -67,17 +70,6 @@ public class Lab6Tester {
         list.displayDFS();
         //display BFS
         list.displayBFS();
-    }
-
-    /**
-     * Dijkstra's Algorithm from a node to another node.
-     */
-    private static void findShortestPath(int startNode, int endNode) {
-        //Checks if List is Empty
-        if (list == null) {
-            System.out.println("List is Empty!");
-            return;
-        }
     }
 
     /**
