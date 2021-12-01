@@ -3,7 +3,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Tests the {@link AdjacencyList}
+ * Tests the {@link AdjacencyList} and the use of Dijkstra's Algorithm, Breath First Search, and Depth First Search.
+ *
+ * @author Ben Goldstone
+ * @version 11/30/2021
  */
 public class Lab6Tester {
     static Scanner scan = new Scanner(System.in);
@@ -24,7 +27,17 @@ public class Lab6Tester {
             System.out.println();
             switch (choice) {
                 case '1':
-                    findShortestPath();
+                    try {
+                        System.out.print("What node number would you like to start with? ");
+                        int startNode = Integer.parseInt(scan.nextLine());
+                        System.out.println();
+                        System.out.print("What node number would you like to end with? ");
+                        System.out.println();
+                        int endNode = Integer.parseInt(scan.nextLine());
+                        findShortestPath(startNode, endNode);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Data Type is not an Integer");
+                    }
                     break;
                 case '2':
                     displayDFSBFS();
@@ -41,9 +54,12 @@ public class Lab6Tester {
         }
     }
 
+    /**
+     * Displays DFS and BFS order.
+     */
     private static void displayDFSBFS() {
         //Checks if List is Empty
-        if(list == null){
+        if (list == null) {
             System.out.println("List is Empty!");
             return;
         }
@@ -53,14 +69,20 @@ public class Lab6Tester {
         list.displayBFS();
     }
 
-    private static void findShortestPath() {
+    /**
+     * Dijkstra's Algorithm from a node to another node.
+     */
+    private static void findShortestPath(int startNode, int endNode) {
         //Checks if List is Empty
-        if(list == null){
+        if (list == null) {
             System.out.println("List is Empty!");
             return;
         }
     }
 
+    /**
+     * Loads in a file of a graph into an AdjacencyList.
+     */
     public static void loadFile() {
 
         Scanner file;

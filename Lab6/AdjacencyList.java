@@ -2,6 +2,8 @@ import java.util.Arrays;
 
 /**
  * Creates an object of an AdjacencyList for a Graph.
+ * @author Ben Goldstone
+ * @version 11/30/2021
  */
 public class AdjacencyList {
 
@@ -104,7 +106,7 @@ public class AdjacencyList {
     }
 
     /**
-     * Displays Breath First Search Algorithm on AdjacencyList
+     * Displays Breath First Search algorithm on AdjacencyList
      */
     public void displayBFS() {
         int[] visited = new int[numOfNodes];

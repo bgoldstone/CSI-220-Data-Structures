@@ -41,7 +41,7 @@ public class Queue {
     }
 
     /**
-     * removes first value from the queue
+     * Removes first value from the queue
      *
      * @return the first value in the queue
      */
