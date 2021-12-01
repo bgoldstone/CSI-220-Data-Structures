@@ -130,6 +130,13 @@ public class AdjacencyList {
         System.out.println(Arrays.toString(visited));
 
     }
+
+    /**
+     * Dijkstra's Algorithm from a node to another node.
+     * @param startNode The node number to start with.
+     * @param endNode The node number to end with.
+     * @return String with Shortest Path.
+     */
     public String findShortestPath(int startNode, int endNode){
         StringBuilder sb = new StringBuilder("The shortest path from ");
         sb.append(startNode);
