@@ -58,7 +58,7 @@ public class Queue {
             return -1;
         }
         int returnValue = queue[front];
-        queue[front] = 0;
+        queue[front] = -1;
         front = front + 1 % size;
         return returnValue;
 
