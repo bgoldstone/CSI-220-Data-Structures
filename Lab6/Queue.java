@@ -20,18 +20,18 @@ public class Queue {
      */
     public Queue(int mySize) {
         this.size = mySize;
-        this.queue = new int[mySize];
-        this.compare = new int[mySize];
+        this.queue = new int[size];
         front = -1;
         rear = -1;
         for (int i = 0; i < size; i++) {
             queue[i] = -1;
             compare[i] = -1;
+
         }
     }
 
     /**
-     * Inserts an item in a queue
+     * inserts an item in a queue
      *
      * @param val value to insert into the queue
      */
@@ -48,7 +48,7 @@ public class Queue {
     }
 
     /**
-     * Removes first value from the queue
+     * removes first value from the queue
      *
      * @return the first value in the queue
      */
@@ -58,9 +58,10 @@ public class Queue {
             return -1;
         }
         int returnValue = queue[front];
-        queue[front] = -1;
+        queue[front] = 0;
         front = front + 1 % size;
         return returnValue;
+
     }
 
     /**
@@ -69,7 +70,7 @@ public class Queue {
      * @return true if queue is empty.
      */
     public boolean isEmpty() {
-        return Arrays.equals(queue, compare);
+        return Arrays.compare(queue, compare) == 0;
     }
 
     /**
@@ -78,8 +79,7 @@ public class Queue {
      * @return true if queue is full.
      */
     public boolean isFull() {
-        if (isEmpty())
-            return false;
+        if (isEmpty()) return false;
         return (rear + 1) % size == front;
     }
 

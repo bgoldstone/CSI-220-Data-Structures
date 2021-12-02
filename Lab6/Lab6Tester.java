@@ -81,23 +81,31 @@ public class Lab6Tester {
         Scanner file;
         System.out.print("What File would you like to read? ");
         String fileName = scan.nextLine();
-        try {
-            file = new Scanner(new File(fileName));
-            System.out.println();
-        } catch (FileNotFoundException e) {
-            System.out.println("File Name: \"" + fileName + "\" is invalid!");
-            return;
+        boolean validFile = false;
+        while (!validFile) {
+            try {
+                file = new Scanner(new File(fileName));
+                System.out.println();
+                validFile = true;
+                String[] firstLine = file.nextLine().split(" ");
+                int numOfNodes = Integer.parseInt(firstLine[0]);
+                int numOfEdges = Integer.parseInt(firstLine[1]);
+                list = new AdjacencyList(numOfNodes);
+                String[] current;
+                for (int i = 0; i < numOfEdges; i++) {
+                    current = file.nextLine().split(" ");
+                    try {
+                        list.insert(Integer.parseInt(current[0]), Integer.parseInt(current[1]), Integer.parseInt(current[2]));
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.out.println("String index out of bounds!");
+                    }
+                }
+                list.display();
+                file.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("File Name: \"" + fileName + "\" is invalid!");
+            }
         }
-        String[] firstLine = file.nextLine().split(" ");
-        int numOfNodes = Integer.parseInt(firstLine[0]);
-        int numOfEdges = Integer.parseInt(firstLine[1]);
-        list = new AdjacencyList(numOfNodes);
-        String[] current;
-        for (int i = 0; i < numOfEdges; i++) {
-            current = file.nextLine().split(" ");
-            list.insert(Integer.parseInt(current[0]), Integer.parseInt(current[1]), Integer.parseInt(current[2]));
-        }
-        list.display();
-        file.close();
+
     }
 }
