@@ -43,25 +43,25 @@ public class AdjacencyList {
         }
     }
 
-//    /**
-//     * Finds ot key exists in the OpenHashTable.
-//     *
-//     * @param key key to find in OpenHashTable.
-//     * @return true if item is in the OpenHashTable.
-//     */
-//    public String search(int from) {
-//        GraphNode current = nodeArray[from];
-//        if (current != null) {
-//            while (current != null) {
-//                if (current.key.equals(key))
-//                    return current.value;
-//                else {
-//                    current = current.next;
-//                }
-//            }
-//        }
-//        return null;
-//    }
+    // /**
+    // * Finds ot key exists in the OpenHashTable.
+    // *
+    // * @param key key to find in OpenHashTable.
+    // * @return true if item is in the OpenHashTable.
+    // */
+    // public String search(int from) {
+    // GraphNode current = nodeArray[from];
+    // if (current != null) {
+    // while (current != null) {
+    // if (current.key.equals(key))
+    // return current.value;
+    // else {
+    // current = current.next;
+    // }
+    // }
+    // }
+    // return null;
+    // }
 
     /**
      * Displays the whole AdjacencyList.
@@ -86,24 +86,25 @@ public class AdjacencyList {
      */
     public void displayDFS() {
         int[] visited = new int[numberOfNodes];
-        Stack<Integer> stack = new Stack<>(numberOfNodes);
+        Stack stack = new Stack(numberOfNodes);
         stack.push(0);
         int current;
         GraphNode currentNode;
-        boolean firstTime = true;
         int pos = 0;
-        while ((pos != visited.length - 1 || firstTime) && !stack.isEmpty()) {
+        while (!stack.isEmpty()) {
             current = stack.pop();
-            if (Arrays.binarySearch(visited, current) < 0) {
+
+            if (!inArray(current, pos, visited)) {
                 currentNode = graphNodes[current];
-                visited[++pos] = current;
                 while (currentNode != null) {
                     stack.push(currentNode.to);
                     currentNode = currentNode.next;
                 }
+                visited[pos] = current;
+                pos++;
             }
-            firstTime = false;
         }
+
         System.out.println(Arrays.toString(visited));
     }
 
@@ -116,22 +117,40 @@ public class AdjacencyList {
         queue.enqueue(0);
         int current;
         GraphNode currentNode;
-        boolean firstTime = true;
         int pos = 0;
-        while (pos != visited.length - 1 || firstTime) {
+        boolean firstTime = true;
+        while (!queue.isEmpty() || firstTime) {
             current = queue.dequeue();
-            if (Arrays.binarySearch(visited, current) < 0) {
+
+            if (current >= 0 && !inArray(current, pos, visited)) {
                 currentNode = graphNodes[current];
-                visited[++pos] = current;
                 while (currentNode != null) {
                     queue.enqueue(currentNode.to);
                     currentNode = currentNode.next;
                 }
+                visited[pos] = current;
+                pos++;
             }
             firstTime = false;
         }
-        System.out.println(Arrays.toString(visited));
 
+        System.out.println(Arrays.toString(visited));
+    }
+
+    /**
+     * Displays if valus is in array.
+     * 
+     * @param value value to search for.
+     * @param pos   the max position to search to.
+     * @param arr   the array of integers.
+     * @return true if value in Array.
+     */
+    public boolean inArray(int value, int pos, int[] arr) {
+        for (int i = 0; i < pos; i++) {
+            if (arr[i] == value)
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -157,7 +176,7 @@ public class AdjacencyList {
         ShortestPathNode toNode;
         GraphNode currentGraphNode;
         int currentNodeNumber;
-        //insert all node into MinHeap
+        // insert all node into MinHeap
         for (int i = 0; i < graphNodes.length; i++) {
             if (i == startNode)
                 unknownNodes.insert(new ShortestPathNode(i, 0));
@@ -170,17 +189,16 @@ public class AdjacencyList {
             currentGraphNode = graphNodes[currentNodeNumber];
             while (currentGraphNode != null) {
                 toNode = unknownNodes.getShortestPathNode(currentGraphNode.to);
-                //set distanceFromStart and previousNode values
-                if (toNode != null)
-                    if (toNode.distanceFromStart == -1 || toNode.distanceFromStart > currentGraphNode.weight) {
-                        if (toNode.distanceFromStart == 0) {
-                            toNode.distanceFromStart = currentGraphNode.weight;
-                            toNode.previousNode = currentNodeNumber;
-                        } else {
-                            toNode.distanceFromStart += currentGraphNode.weight;
-                            toNode.previousNode = currentNodeNumber;
-                        }
+                // set distanceFromStart and previousNode values
+                if (toNode != null
+                        && (toNode.distanceFromStart == -1 || toNode.distanceFromStart > currentGraphNode.weight)) {
+                    if (toNode.distanceFromStart == 0) {
+                        toNode.distanceFromStart = currentGraphNode.weight;
+                    } else {
+                        toNode.distanceFromStart += currentGraphNode.weight;
                     }
+                    toNode.previousNode = currentNodeNumber;
+                }
                 currentGraphNode = currentGraphNode.next;
             }
             currentShortestPathNode.known = true;
@@ -196,11 +214,11 @@ public class AdjacencyList {
         while (true) {
 
             int weight = currentShortestPathNode.distanceFromStart;
-            if(i-1 == -1)
+            if (i - 1 == -1)
                 continue;
             nodePath[--i] = "To Node " + currentNodeNumber + " with a total distance of " + weight;
             currentNodeNumber = currentShortestPathNode.previousNode;
-            if(currentNodeNumber < 0)
+            if (currentNodeNumber < 0)
                 continue;
             currentShortestPathNode = knownNodes[currentNodeNumber];
             if (currentShortestPathNode.previousNode == -1)
@@ -216,40 +234,40 @@ public class AdjacencyList {
         return sb.toString();
     }
 
-//    /**
-//     * Removes the given HashNode from the OpenHashTable.
-//     *
-//     * @param key key to remove from the OpenHashTable.
-//     */
-//    public boolean remove(String key) {
-//        int asciiValue = getAsciiValue(key) % numOfNodes;
-//        GraphNode current = nodeArray[asciiValue];
-//        if (current == null) {
-//            return false;
-//        }
-//        //if first node
-//        if (current.key.equals(key)) {
-//            nodeArray[asciiValue] = current.next;
-//            return true;
-//        }
-//
-//        while (current.next != null) {
-//            if (current.next.key.equals(key)) {
-//                if (current.next.next != null)
-//                    current.next = current.next.next;
-//                else
-//                    current.next = null;
-//                return true;
-//            } else if (current.next == null) {
-//                current = null;
-//
-//            } else
-//                current = current.next;
-//        }
-//
-//
-//        return false;
-//    }
+    // /**
+    // * Removes the given HashNode from the OpenHashTable.
+    // *
+    // * @param key key to remove from the OpenHashTable.
+    // */
+    // public boolean remove(String key) {
+    // int asciiValue = getAsciiValue(key) % numOfNodes;
+    // GraphNode current = nodeArray[asciiValue];
+    // if (current == null) {
+    // return false;
+    // }
+    // //if first node
+    // if (current.key.equals(key)) {
+    // nodeArray[asciiValue] = current.next;
+    // return true;
+    // }
+    //
+    // while (current.next != null) {
+    // if (current.next.key.equals(key)) {
+    // if (current.next.next != null)
+    // current.next = current.next.next;
+    // else
+    // current.next = null;
+    // return true;
+    // } else if (current.next == null) {
+    // current = null;
+    //
+    // } else
+    // current = current.next;
+    // }
+    //
+    //
+    // return false;
+    // }
 
     /**
      * Creates an object of a GraphNode.

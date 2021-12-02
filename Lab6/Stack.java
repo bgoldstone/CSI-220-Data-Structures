@@ -1,27 +1,27 @@
-public class Stack<T>{
-    private LinkedList<T> stack;
+public class Stack {
+    private LinkedList stack;
     private int maxSize;
 
     public Stack(int maxSize) {
-        stack = new LinkedList<>();
+        stack = new LinkedList();
         this.maxSize = maxSize;
 
     }
 
-    public void push(T number) {
+    public void push(int number) {
         stack.addFirst(number);
 
     }
 
-    public T pop() {
+    public int pop() {
         if (isEmpty())
-            return null;
+            return -1;
         return stack.removeFirst();
     }
 
-    public T peek() {
+    public int peek() {
         if (isEmpty())
-            return null;
+            return -1;
         return stack.getFirst();
     }
 
@@ -38,7 +38,7 @@ public class Stack<T>{
     }
 }
 
-class LinkedList<T> {
+class LinkedList {
     private Node top; // Pointer to the head of the list.
 
     public LinkedList() {
@@ -49,7 +49,7 @@ class LinkedList<T> {
      * Enter a data item at the front of the list.
      */
 
-    public void addFirst(T item) {
+    public void addFirst(int item) {
         Node ptr = new Node(); // Construct a new node - ptr points to it.
         ptr.data = item; // New node's data is the parameter item.
         if (!isEmpty()) {
@@ -81,7 +81,7 @@ class LinkedList<T> {
      * removeFirst()
      * removes first element
      */
-    public T removeFirst() {
+    public int removeFirst() {
         Node temp = top;
         top = top.next;
         return temp.data;
@@ -91,7 +91,7 @@ class LinkedList<T> {
      * getFirst()
      * returns first element data
      */
-    public T getFirst() {
+    public int getFirst() {
         return top.data;
     }
 
@@ -112,8 +112,8 @@ class LinkedList<T> {
         Node ptr = top; // Pointer to traverse the list.
 
         while (ptr != null) { // While not at the end of the list ...
-            T data = ptr.data; // Get data of current node.
-            System.out.println(data.toString()); // Print the data.
+            int data = ptr.data; // Get data of current node.
+            System.out.println(data); // Print the data.
             ptr = ptr.next; // Move to the next node.
         }
 
@@ -125,7 +125,7 @@ class LinkedList<T> {
     }
 
     private class Node {
-        public T data; // Data stored in the Node.
+        public int data; // Data stored in the Node.
         public Node next; // Pointer to next Node in the list.
     }
 }

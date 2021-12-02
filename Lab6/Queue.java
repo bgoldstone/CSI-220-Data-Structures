@@ -1,4 +1,5 @@
 import java.util.Arrays;
+
 /**
  * A Circular Implementation of a Queue
  *
@@ -7,6 +8,7 @@ import java.util.Arrays;
  */
 public class Queue {
     private int[] queue;
+    private int[] compare;
     private int size;
     private int front;
     private int rear;
@@ -18,9 +20,14 @@ public class Queue {
      */
     public Queue(int mySize) {
         this.size = mySize;
-        this.queue = new int[size];
+        this.queue = new int[mySize];
+        this.compare = new int[mySize];
         front = -1;
         rear = -1;
+        for (int i = 0; i < size; i++) {
+            queue[i] = -1;
+            compare[i] = -1;
+        }
     }
 
     /**
@@ -51,10 +58,9 @@ public class Queue {
             return -1;
         }
         int returnValue = queue[front];
-        queue[front] = 0;
+        queue[front] = -1;
         front = front + 1 % size;
         return returnValue;
-
     }
 
     /**
@@ -63,7 +69,7 @@ public class Queue {
      * @return true if queue is empty.
      */
     public boolean isEmpty() {
-        return Arrays.compare(queue, new int[size]) == 0;
+        return Arrays.equals(queue, compare);
     }
 
     /**
@@ -72,7 +78,8 @@ public class Queue {
      * @return true if queue is full.
      */
     public boolean isFull() {
-        if (isEmpty()) return false;
+        if (isEmpty())
+            return false;
         return (rear + 1) % size == front;
     }
 

@@ -3,7 +3,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Tests the {@link AdjacencyList} and the use of Dijkstra's Algorithm, Breath First Search, and Depth First Search.
+ * Tests the {@link AdjacencyList} and the use of Dijkstra's Algorithm, Breath
+ * First Search, and Depth First Search.
  *
  * @author Ben Goldstone
  * @version 11/30/2021
@@ -61,14 +62,14 @@ public class Lab6Tester {
      * Displays DFS and BFS order.
      */
     private static void displayDFSBFS() {
-        //Checks if List is Empty
+        // Checks if List is Empty
         if (list == null) {
             System.out.println("List is Empty!");
             return;
         }
-        //display DFS
+        // display DFS
         list.displayDFS();
-        //display BFS
+        // display BFS
         list.displayBFS();
     }
 
