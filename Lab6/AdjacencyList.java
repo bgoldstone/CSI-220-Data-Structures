@@ -118,8 +118,7 @@ public class AdjacencyList {
         int current;
         GraphNode currentNode;
         int pos = 0;
-        boolean firstTime = true;
-        while (!queue.isEmpty() || firstTime) {
+        while (!queue.isEmpty()) {
             current = queue.dequeue();
 
             if (current >= 0 && !inArray(current, pos, visited)) {
@@ -131,7 +130,6 @@ public class AdjacencyList {
                 visited[pos] = current;
                 pos++;
             }
-            firstTime = false;
         }
 
         System.out.println(Arrays.toString(visited));
@@ -139,7 +137,7 @@ public class AdjacencyList {
 
     /**
      * Displays if valus is in array.
-     * 
+     *
      * @param value value to search for.
      * @param pos   the max position to search to.
      * @param arr   the array of integers.
@@ -157,81 +155,49 @@ public class AdjacencyList {
      * Dijkstra's Algorithm from a node to another node.
      *
      * @param startNode The node number to start with.
-     * @param endNode   The node number to end with.
      * @return String with the shortest Path.
      */
-    public String findShortestPath(int startNode, int endNode) {
-        if (startNode < 0 || startNode >= numberOfNodes || endNode < 0 || endNode >= numberOfNodes) {
-            System.out.println("Index out of Bounds!");
-            return "";
+    public void findShortestPath(int startNode) {
+        int[][] dijkstraArray = new int[numberOfNodes][3];
+        MinHeap dijkstraHeap = new MinHeap(numberOfNodes);
+        ShortestPathNode shortestPathNode;
+        GraphNode graphNode;
+        for (int i = 0; i < dijkstraArray.length; i++) {
+            dijkstraArray[i][0] = 0;
+            dijkstraArray[i][1] = Integer.MAX_VALUE;
+            dijkstraArray[i][2] = -1;
         }
-        StringBuilder sb = new StringBuilder("The shortest path from ");
-        sb.append(startNode);
-        sb.append(" to ");
-        sb.append(endNode);
-        sb.append(" is: ");
-        ShortestPathNode[] knownNodes = new ShortestPathNode[numberOfNodes];
-        MinHeap unknownNodes = new MinHeap(numberOfNodes);
-        ShortestPathNode currentShortestPathNode;
-        ShortestPathNode toNode;
-        GraphNode currentGraphNode;
-        int currentNodeNumber;
-        // insert all node into MinHeap
-        for (int i = 0; i < graphNodes.length; i++) {
-            if (i == startNode)
-                unknownNodes.insert(new ShortestPathNode(i, 0));
-            else
-                unknownNodes.insert(new ShortestPathNode(i));
+        try {
+            dijkstraArray[startNode][1] = 0;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Invalid Start Node!");
+            return;
         }
-        while (!unknownNodes.isEmpty()) {
-            currentShortestPathNode = unknownNodes.remove();
-            currentNodeNumber = currentShortestPathNode.nodeNumber;
-            currentGraphNode = graphNodes[currentNodeNumber];
-            while (currentGraphNode != null) {
-                toNode = unknownNodes.getShortestPathNode(currentGraphNode.to);
-                // set distanceFromStart and previousNode values
-                if (toNode != null
-                        && (toNode.distanceFromStart == -1 || toNode.distanceFromStart > currentGraphNode.weight)) {
-                    if (toNode.distanceFromStart == 0) {
-                        toNode.distanceFromStart = currentGraphNode.weight;
-                    } else {
-                        toNode.distanceFromStart += currentGraphNode.weight;
-                    }
-                    toNode.previousNode = currentNodeNumber;
+        dijkstraHeap.insert(new ShortestPathNode(startNode, dijkstraArray[startNode][1]));
+        while (!dijkstraHeap.isEmpty()) {
+            shortestPathNode = dijkstraHeap.remove();
+            graphNode = graphNodes[shortestPathNode.nodeNumber];
+            while (graphNode != null) {
+                if (graphNode.weight + shortestPathNode.distanceFromStart < dijkstraArray[shortestPathNode.nodeNumber][1]) {
+                    dijkstraArray[shortestPathNode.nodeNumber][1] = graphNode.weight + dijkstraArray[shortestPathNode.nodeNumber][1];
+                    dijkstraArray[shortestPathNode.nodeNumber][2] = shortestPathNode.nodeNumber;
                 }
-                currentGraphNode = currentGraphNode.next;
-            }
-            currentShortestPathNode.known = true;
-            knownNodes[currentNodeNumber] = currentShortestPathNode;
-        }
-        currentNodeNumber = endNode;
-        currentShortestPathNode = knownNodes[endNode];
-        String[] nodePath = new String[numberOfNodes];
-        int i = numberOfNodes;
-        sb.append("from: ");
-        sb.append(startNode);
-        sb.append("\n");
-        while (true) {
+                graphNode = graphNode.next;
+                for (int i = 0; i < dijkstraArray.length; i++) {
+                    if (dijkstraArray[i][0] == 0) {
+                        dijkstraHeap.insert(new ShortestPathNode(i, dijkstraArray[startNode][1]));
+                    }
+                }
+                dijkstraArray[shortestPathNode.nodeNumber][1] = 1;
 
-            int weight = currentShortestPathNode.distanceFromStart;
-            if (i - 1 == -1)
-                continue;
-            nodePath[--i] = "To Node " + currentNodeNumber + " with a total distance of " + weight;
-            currentNodeNumber = currentShortestPathNode.previousNode;
-            if (currentNodeNumber < 0)
-                continue;
-            currentShortestPathNode = knownNodes[currentNodeNumber];
-            if (currentShortestPathNode.previousNode == -1)
-                break;
-        }
-        for (String node : nodePath) {
-            if (node != null && !node.equals("")) {
-                sb.append(node);
-                sb.append("\n");
             }
-        }
 
-        return sb.toString();
+        }
+        System.out.println();
+        for (int i = 0; i < dijkstraArray.length; i++) {
+            System.out.println("Node Number: " + i + " distance from node " + startNode +
+                    ": " + dijkstraArray[i][1] + " From Node: " + dijkstraArray[i][2]);
+        }
     }
 
     // /**

@@ -32,13 +32,10 @@ public class Lab6Tester {
                         System.out.print("What node number would you like to start with? ");
                         int startNode = Integer.parseInt(scan.nextLine());
                         System.out.println();
-                        System.out.print("What node number would you like to end with? ");
-                        System.out.println();
-                        int endNode = Integer.parseInt(scan.nextLine());
                         if (list == null)
                             System.out.println("List Is Empty!");
                         else
-                            System.out.println(list.findShortestPath(startNode, endNode));
+                            list.findShortestPath(startNode);
                     } catch (NumberFormatException e) {
                         System.out.println("Data Type is not an Integer");
                     }
@@ -78,33 +75,35 @@ public class Lab6Tester {
      */
     public static void loadFile() {
 
-        Scanner file;
-        System.out.print("What File would you like to read? ");
-        String fileName = scan.nextLine();
+        Scanner file = null;
         boolean validFile = false;
         while (!validFile) {
+            System.out.print("What File would you like to read? ");
+            String fileName = scan.nextLine();
             try {
                 file = new Scanner(new File(fileName));
                 System.out.println();
                 validFile = true;
-                String[] firstLine = file.nextLine().split(" ");
-                int numOfNodes = Integer.parseInt(firstLine[0]);
-                int numOfEdges = Integer.parseInt(firstLine[1]);
-                list = new AdjacencyList(numOfNodes);
-                String[] current;
-                for (int i = 0; i < numOfEdges; i++) {
-                    current = file.nextLine().split(" ");
-                    try {
-                        list.insert(Integer.parseInt(current[0]), Integer.parseInt(current[1]), Integer.parseInt(current[2]));
-                    } catch (StringIndexOutOfBoundsException e) {
-                        System.out.println("String index out of bounds!");
-                    }
-                }
-                list.display();
-                file.close();
             } catch (FileNotFoundException e) {
                 System.out.println("File Name: \"" + fileName + "\" is invalid!");
+                continue;
             }
+            String[] firstLine = file.nextLine().split(" ");
+            int numOfNodes = Integer.parseInt(firstLine[0]);
+            int numOfEdges = Integer.parseInt(firstLine[1]);
+            list = new AdjacencyList(numOfNodes);
+            String[] current;
+            for (int i = 0; i < numOfEdges; i++) {
+                current = file.nextLine().split(" ");
+                try {
+                    list.insert(Integer.parseInt(current[0]), Integer.parseInt(current[1]), Integer.parseInt(current[2]));
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.out.println("String index out of bounds!");
+                }
+            }
+            list.display();
+            file.close();
+
         }
 
     }

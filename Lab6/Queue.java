@@ -21,6 +21,7 @@ public class Queue {
     public Queue(int mySize) {
         this.size = mySize;
         this.queue = new int[size];
+        this.compare = new int[size];
         front = -1;
         rear = -1;
         for (int i = 0; i < size; i++) {
@@ -36,7 +37,7 @@ public class Queue {
      * @param val value to insert into the queue
      */
     public void enqueue(int val) {
-        if (isEmpty()) {
+        if (isEmpty() && front == -1) {
             front++;
         }
         if (isFull()) {
@@ -59,7 +60,7 @@ public class Queue {
         }
         int returnValue = queue[front];
         queue[front] = -1;
-        front = front + 1 % size;
+        front = (front + 1) % size;
         return returnValue;
 
     }
@@ -70,7 +71,7 @@ public class Queue {
      * @return true if queue is empty.
      */
     public boolean isEmpty() {
-        return Arrays.compare(queue, compare) == 0;
+        return (Arrays.compare(queue, compare) == 0);
     }
 
     /**
@@ -87,7 +88,7 @@ public class Queue {
      * Returns string representation of a queue.
      * Mostly used for debugging purposes.
      *
-     * @return
+     * @return String representation of Queue.
      */
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
