@@ -12,7 +12,7 @@ public class MinHeap {
     public MinHeap(int size) {
         this.size = size;
         nodeArr = new ShortestPathNode[size];
-        currentSize = -1;
+        currentSize = 0;
     }
 
     /**
@@ -67,7 +67,7 @@ public class MinHeap {
      * @return true if {@link MinHeap} is empty.
      */
     public boolean isEmpty() {
-        return nodeArr[1] == null;
+        return currentSize==0;
     }
 
     /**
