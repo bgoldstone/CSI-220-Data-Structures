@@ -43,26 +43,6 @@ public class AdjacencyList {
         }
     }
 
-    // /**
-    // * Finds ot key exists in the OpenHashTable.
-    // *
-    // * @param key key to find in OpenHashTable.
-    // * @return true if item is in the OpenHashTable.
-    // */
-    // public String search(int from) {
-    // GraphNode current = nodeArray[from];
-    // if (current != null) {
-    // while (current != null) {
-    // if (current.key.equals(key))
-    // return current.value;
-    // else {
-    // current = current.next;
-    // }
-    // }
-    // }
-    // return null;
-    // }
-
     /**
      * Displays the whole AdjacencyList.
      */
@@ -94,7 +74,7 @@ public class AdjacencyList {
         while (!stack.isEmpty()) {
             current = stack.pop();
 
-            if (!inArray(current, pos, visited)) {
+            if (notInArray(current, pos, visited)) {
                 currentNode = graphNodes[current];
                 while (currentNode != null) {
                     stack.push(currentNode.to);
@@ -121,7 +101,7 @@ public class AdjacencyList {
         while (!queue.isEmpty()) {
             current = queue.dequeue();
 
-            if (current >= 0 && !inArray(current, pos, visited)) {
+            if (current >= 0 && notInArray(current, pos, visited)) {
                 currentNode = graphNodes[current];
                 while (currentNode != null) {
                     queue.enqueue(currentNode.to);
@@ -136,60 +116,70 @@ public class AdjacencyList {
     }
 
     /**
-     * Displays if valus is in array.
+     * Displays if value is in array.
      *
      * @param value value to search for.
      * @param pos   the max position to search to.
      * @param arr   the array of integers.
      * @return true if value in Array.
      */
-    public boolean inArray(int value, int pos, int[] arr) {
+    public boolean notInArray(int value, int pos, int[] arr) {
         for (int i = 0; i < pos; i++) {
             if (arr[i] == value)
-                return true;
+                return false;
         }
-        return false;
+        return true;
     }
 
     /**
      * Dijkstra's Algorithm from a node to another node.
      *
      * @param startNode The node number to start with.
-     * @return String with the shortest Path.
      */
     public void findShortestPath(int startNode) {
         int[][] dijkstraArray = new int[numberOfNodes][3];
         MinHeap dijkstraHeap = new MinHeap(numberOfNodes);
         ShortestPathNode shortestPathNode;
         GraphNode graphNode;
+        //init array
         for (int i = 0; i < dijkstraArray.length; i++) {
+            //known
             dijkstraArray[i][0] = 0;
+            //distance
             dijkstraArray[i][1] = Integer.MAX_VALUE;
-            dijkstraArray[i][2] = -1;
+            //previous
+            dijkstraArray[i][2] = 0;
         }
+        //sets first node pv to 0
         try {
             dijkstraArray[startNode][1] = 0;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Invalid Start Node!");
             return;
         }
+        //inserts first node
         dijkstraHeap.insert(new ShortestPathNode(startNode, dijkstraArray[startNode][1]));
+
         while (!dijkstraHeap.isEmpty()) {
             shortestPathNode = dijkstraHeap.remove();
+            System.out.println("Selected Node: " + shortestPathNode.nodeNumber);
             graphNode = graphNodes[shortestPathNode.nodeNumber];
             while (graphNode != null) {
-                if (graphNode.weight + shortestPathNode.distanceFromStart < dijkstraArray[shortestPathNode.nodeNumber][1]) {
-                    dijkstraArray[shortestPathNode.nodeNumber][1] = graphNode.weight + dijkstraArray[shortestPathNode.nodeNumber][1];
-                    dijkstraArray[shortestPathNode.nodeNumber][2] = shortestPathNode.nodeNumber;
+                if ((shortestPathNode.distanceFromStart + graphNode.weight < dijkstraArray[graphNode.to][1]) && (dijkstraArray[graphNode.to][0] == 0)) {
+                    System.out.println(graphNode.to + " " + (shortestPathNode.distanceFromStart + graphNode.weight));
+                    dijkstraArray[graphNode.to][1] = shortestPathNode.distanceFromStart + graphNode.weight;
+                    //sets distance in array
+                    dijkstraArray[graphNode.to][2] = shortestPathNode.nodeNumber;
                 }
                 graphNode = graphNode.next;
-                for (int i = 0; i < dijkstraArray.length; i++) {
-                    if (dijkstraArray[i][0] == 0) {
-                        dijkstraHeap.insert(new ShortestPathNode(i, dijkstraArray[startNode][1]));
-                    }
+            }
+            dijkstraArray[shortestPathNode.nodeNumber][0] = 1;
+            //clears heap
+            dijkstraHeap.clearHeap();
+            for (int i = 0; i < dijkstraArray.length; i++) {
+                if (dijkstraArray[i][0] == 0) {
+                    dijkstraHeap.insert(new ShortestPathNode(i, dijkstraArray[i][1]));
                 }
-                dijkstraArray[shortestPathNode.nodeNumber][1] = 1;
-
             }
 
         }
@@ -200,45 +190,10 @@ public class AdjacencyList {
         }
     }
 
-    // /**
-    // * Removes the given HashNode from the OpenHashTable.
-    // *
-    // * @param key key to remove from the OpenHashTable.
-    // */
-    // public boolean remove(String key) {
-    // int asciiValue = getAsciiValue(key) % numOfNodes;
-    // GraphNode current = nodeArray[asciiValue];
-    // if (current == null) {
-    // return false;
-    // }
-    // //if first node
-    // if (current.key.equals(key)) {
-    // nodeArray[asciiValue] = current.next;
-    // return true;
-    // }
-    //
-    // while (current.next != null) {
-    // if (current.next.key.equals(key)) {
-    // if (current.next.next != null)
-    // current.next = current.next.next;
-    // else
-    // current.next = null;
-    // return true;
-    // } else if (current.next == null) {
-    // current = null;
-    //
-    // } else
-    // current = current.next;
-    // }
-    //
-    //
-    // return false;
-    // }
-
     /**
      * Creates an object of a GraphNode.
      */
-    class GraphNode {
+    static class GraphNode {
         int to;
         int weight;
         GraphNode next;

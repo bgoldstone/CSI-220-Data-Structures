@@ -1,5 +1,5 @@
 /**
- * Creates an object of a MinHeap for Dijkstra's Algorithm
+ * Creates an object of a MinHeap for Dijkstra's Algorithm.
  */
 public class MinHeap {
     private final ShortestPathNode[] nodeArr;
@@ -8,6 +8,8 @@ public class MinHeap {
 
     /**
      * Constructor for a {@link MinHeap}.
+     *
+     * @param size size of the {@link MinHeap}.
      */
     public MinHeap(int size) {
         this.size = size;
@@ -62,12 +64,12 @@ public class MinHeap {
     }
 
     /**
-     * Gets if {@link MinHeap} is Empty
+     * Gets if {@link MinHeap} is Empty.
      *
      * @return true if {@link MinHeap} is empty.
      */
     public boolean isEmpty() {
-        return currentSize==0;
+        return currentSize == 0;
     }
 
     /**
@@ -77,27 +79,6 @@ public class MinHeap {
         for (int i = 1; i <= currentSize; i++) {
             System.out.println("Node Number: " + nodeArr[i].nodeNumber + " Priority: " + nodeArr[i].distanceFromStart);
         }
-    }
-
-    /**
-     * Gets a ShortestPathNode
-     *
-     * @param nodeNumber Node Number to get.
-     */
-    public ShortestPathNode getShortestPathNode(int nodeNumber) {
-        if (isEmpty()) {
-            System.out.println("Heap is Empty!");
-            return null;
-        }
-        ShortestPathNode current;
-        for (int i = 1; i < currentSize + 1; i++) {
-            current = nodeArr[i];
-            if (current.nodeNumber == nodeNumber) {
-                return nodeArr[i];
-            }
-        }
-        System.out.println("Node not found!");
-        return null;
     }
 
     /**
@@ -133,9 +114,12 @@ public class MinHeap {
                 return;
             int leftNode = i * 2;
             int rightNode = i * 2 + 1;
+            if (leftNode < currentSize)
+                break;
             if (nodeArr[leftNode] == null)
                 return;
-            if (nodeArr[leftNode].distanceFromStart < currentNode.distanceFromStart && nodeArr[rightNode] == null) {
+            if ((nodeArr[leftNode].distanceFromStart < currentNode.distanceFromStart && nodeArr[rightNode] == null) ||
+                    ((nodeArr[leftNode].distanceFromStart < nodeArr[rightNode].distanceFromStart) && (currentNode.distanceFromStart > nodeArr[leftNode].distanceFromStart))) {
                 swapParentChild(leftNode);
                 i *= 2;
             } else if (nodeArr[leftNode].distanceFromStart >= currentNode.distanceFromStart && (nodeArr[rightNode] == null)) {
@@ -144,12 +128,19 @@ public class MinHeap {
                 swapParentChild(rightNode);
                 i = (i * 2) + 1;
                 //if left smaller than right and parent bigger than left
-            } else if ((nodeArr[leftNode].distanceFromStart < nodeArr[rightNode].distanceFromStart) && (currentNode.distanceFromStart > nodeArr[leftNode].distanceFromStart)) {
-                swapParentChild(leftNode);
-                i *= 2;
             } else
                 return;
         }
+    }
+
+    /**
+     * Emptys the {@link MinHeap}.
+     */
+    public void clearHeap() {
+        for (int i = 0; i < currentSize; i++) {
+            nodeArr[i] = null;
+        }
+        currentSize = 0;
     }
 
 }
