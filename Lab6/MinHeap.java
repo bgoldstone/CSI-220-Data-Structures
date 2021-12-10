@@ -118,8 +118,7 @@ public class MinHeap {
                 break;
             if (nodeArr[leftNode] == null)
                 return;
-            if ((nodeArr[leftNode].distanceFromStart < currentNode.distanceFromStart && nodeArr[rightNode] == null) ||
-                    ((nodeArr[leftNode].distanceFromStart < nodeArr[rightNode].distanceFromStart) && (currentNode.distanceFromStart > nodeArr[leftNode].distanceFromStart))) {
+            if (nodeArr[leftNode].distanceFromStart < currentNode.distanceFromStart && nodeArr[rightNode] == null) {
                 swapParentChild(leftNode);
                 i *= 2;
             } else if (nodeArr[leftNode].distanceFromStart >= currentNode.distanceFromStart && (nodeArr[rightNode] == null)) {
@@ -128,9 +127,13 @@ public class MinHeap {
                 swapParentChild(rightNode);
                 i = (i * 2) + 1;
                 //if left smaller than right and parent bigger than left
+            } else if ((nodeArr[leftNode].distanceFromStart < nodeArr[rightNode].distanceFromStart) && (currentNode.distanceFromStart > nodeArr[leftNode].distanceFromStart)) {
+                swapParentChild(leftNode);
+                i *= 2;
             } else
                 return;
         }
+
     }
 
     /**

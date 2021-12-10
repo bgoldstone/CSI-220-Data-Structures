@@ -85,7 +85,7 @@ public class AdjacencyList {
             }
         }
 
-        System.out.println(Arrays.toString(visited));
+        System.out.println("DFS: " + Arrays.toString(visited));
     }
 
     /**
@@ -112,7 +112,7 @@ public class AdjacencyList {
             }
         }
 
-        System.out.println(Arrays.toString(visited));
+        System.out.println("BFS: " + Arrays.toString(visited));
     }
 
     /**
@@ -162,11 +162,9 @@ public class AdjacencyList {
 
         while (!dijkstraHeap.isEmpty()) {
             shortestPathNode = dijkstraHeap.remove();
-            System.out.println("Selected Node: " + shortestPathNode.nodeNumber);
             graphNode = graphNodes[shortestPathNode.nodeNumber];
             while (graphNode != null) {
                 if ((shortestPathNode.distanceFromStart + graphNode.weight < dijkstraArray[graphNode.to][1]) && (dijkstraArray[graphNode.to][0] == 0)) {
-                    System.out.println(graphNode.to + " " + (shortestPathNode.distanceFromStart + graphNode.weight));
                     dijkstraArray[graphNode.to][1] = shortestPathNode.distanceFromStart + graphNode.weight;
                     //sets distance in array
                     dijkstraArray[graphNode.to][2] = shortestPathNode.nodeNumber;
