@@ -235,6 +235,7 @@ public class DoublyLinkedList<E> extends AbstractList<E> implements List<E>, Col
     }
 
 
+
     class Node {
         E element;
         Node next;
