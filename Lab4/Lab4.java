@@ -5,7 +5,7 @@ import java.util.Scanner;
  */
 public class Lab4 {
     static StringBuilder output = new StringBuilder();
-    static Stack<String> stack = new Stack<>(10);
+    static MyStack<String> stack = new MyStack<>(10);
     static Scanner scan = new Scanner(System.in);
 
     /**

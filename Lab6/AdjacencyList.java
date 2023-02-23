@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author Ben Goldstone
  * @version 11/30/2021
  */
-public class AdjacencyList {
+public class AdjacencyList<T> {
 
     private final int numberOfNodes;
     private final GraphNode[] graphNodes;
@@ -66,7 +66,7 @@ public class AdjacencyList {
      */
     public void displayDFS() {
         int[] visited = new int[numberOfNodes];
-        Stack stack = new Stack(numberOfNodes);
+        MyStack<Integer> stack = new MyStack<>();
         stack.push(0);
         int current;
         GraphNode currentNode;
@@ -141,38 +141,39 @@ public class AdjacencyList {
         MinHeap dijkstraHeap = new MinHeap(numberOfNodes);
         ShortestPathNode shortestPathNode;
         GraphNode graphNode;
-        //init array
+        // init array
         for (int i = 0; i < dijkstraArray.length; i++) {
-            //known
+            // known
             dijkstraArray[i][0] = 0;
-            //distance
+            // distance
             dijkstraArray[i][1] = Integer.MAX_VALUE;
-            //previous
+            // previous
             dijkstraArray[i][2] = 0;
         }
-        //sets first node pv to 0
+        // sets first node pv to 0
         try {
             dijkstraArray[startNode][1] = 0;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Invalid Start Node!");
             return;
         }
-        //inserts first node
+        // inserts first node
         dijkstraHeap.insert(new ShortestPathNode(startNode, dijkstraArray[startNode][1]));
 
         while (!dijkstraHeap.isEmpty()) {
             shortestPathNode = dijkstraHeap.remove();
             graphNode = graphNodes[shortestPathNode.nodeNumber];
             while (graphNode != null) {
-                if ((shortestPathNode.distanceFromStart + graphNode.weight < dijkstraArray[graphNode.to][1]) && (dijkstraArray[graphNode.to][0] == 0)) {
+                if ((shortestPathNode.distanceFromStart + graphNode.weight < dijkstraArray[graphNode.to][1])
+                        && (dijkstraArray[graphNode.to][0] == 0)) {
                     dijkstraArray[graphNode.to][1] = shortestPathNode.distanceFromStart + graphNode.weight;
-                    //sets distance in array
+                    // sets distance in array
                     dijkstraArray[graphNode.to][2] = shortestPathNode.nodeNumber;
                 }
                 graphNode = graphNode.next;
             }
             dijkstraArray[shortestPathNode.nodeNumber][0] = 1;
-            //clears heap
+            // clears heap
             dijkstraHeap.clearHeap();
             for (int i = 0; i < dijkstraArray.length; i++) {
                 if (dijkstraArray[i][0] == 0) {

@@ -6,7 +6,7 @@ import java.util.Queue;
 /**
  * A Singly Linked List with a tail based on opendatastructures.org
  */
-public class DoublyLinkedList<E> extends AbstractList<E> implements List<E>, Collection<E>, Iterable<E>, Serializable, Queue<E>, Stack<E> {
+public class DoublyLinkedList<E> extends AbstractList<E> implements List<E>, Collection<E>, Iterable<E>, Serializable, Queue<E>, MyStack<E> {
     private Node head;
     private Node tail;
     private int size;

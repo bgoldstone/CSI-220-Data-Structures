@@ -1,28 +1,26 @@
 /**
  * An implementation of a Stack using a LinkedList.
  */
-public class Stack {
-    private LinkedList stack;
-    private int maxSize;
+public class MyStack<T> {
+    private MyLinkedList<T> stackLL;
 
     /**
-     * A constructor for a {@link Stack}.
+     * A constructor for a {@link MyStack}.
      *
-     * @param maxSize Maximum size of a {@link Stack}.
+     * @param maxSize Maximum size of a {@link MyStack}.
      */
-    public Stack(int maxSize) {
-        stack = new LinkedList();
-        this.maxSize = maxSize;
+    public MyStack() {
+        stackLL = new MyLinkedList<>();
 
     }
 
     /**
      * Pushes an item into a Stack.
      *
-     * @param number number to push in the Stack.
+     * @param object object to push in the Stack.
      */
-    public void push(int number) {
-        stack.addFirst(number);
+    public void push(T object) {
+        stackLL.push(object);
 
     }
 
@@ -31,10 +29,10 @@ public class Stack {
      *
      * @return Removed item from the Stack.
      */
-    public int pop() {
+    public T pop() {
         if (isEmpty())
-            return -1;
-        return stack.removeFirst();
+            return null;
+        return (T) stackLL.pop();
     }
 
     /**
@@ -42,10 +40,10 @@ public class Stack {
      *
      * @return First item from the Stack.
      */
-    public int peek() {
+    public T peek() {
         if (isEmpty())
-            return -1;
-        return stack.getFirst();
+            return null;
+        return (T) stackLL.peek();
     }
 
     /**
@@ -54,34 +52,27 @@ public class Stack {
      * @return true if empty.
      */
     public boolean isEmpty() {
-        return stack.isEmpty();
-    }
-
-    /**
-     * Checks if Stack is Full.
-     */
-    public boolean isFull() {
-        return stack.size() == maxSize;
+        return stackLL.isEmpty();
     }
 
     /**
      * Clears the stack.
      */
     public void clear() {
-        stack.clear();
+        stackLL.clear();
     }
 }
 
 /**
  * An implementation of a LinkedList.
  */
-class LinkedList {
-    private Node top; // Pointer to the head of the list.
+class MyLinkedList<T> {
+    private Node<T> top; // Pointer to the head of the list.
 
     /**
-     * Constructor for a {@link LinkedList}.
+     * Constructor for a {@link MyLinkedList}.
      */
-    public LinkedList() {
+    public MyLinkedList() {
         top = null;
     }
 
@@ -90,8 +81,8 @@ class LinkedList {
      *
      * @param item item to add to the front of the list.
      */
-    public void addFirst(int item) {
-        Node ptr = new Node(); // Construct a new node - ptr points to it.
+    public void push(T item) {
+        Node<T> ptr = new Node<>(); // Construct a new Node<T> - ptr points to it.
         ptr.data = item; // New node's data is the parameter item.
         if (!isEmpty()) {
             ptr.next = top;
@@ -106,16 +97,16 @@ class LinkedList {
      */
 
     public int size() {
-        Node ptr = top; // A pointer to travel the list.
-        int count = 0; // Counts the number of nodes.
+        Node<T> ptr = top; // A pointer to travel the list.
+        int count = 0; // Counts the object of nodes.
 
         while (ptr != null) // While not at the end of the list.
         {
-            count++; // Add this node to the count.
+            count++; // Add this Node<T> to the count.
             ptr = ptr.next; // Move to the next node.
         }
 
-        return count; // Return the number of nodes.
+        return count; // Return the object of nodes.
     }
 
     /**
@@ -123,8 +114,8 @@ class LinkedList {
      *
      * @return first element.
      */
-    public int removeFirst() {
-        Node temp = top;
+    public T pop() {
+        Node<T> temp = top;
         top = top.next;
         return temp.data;
     }
@@ -134,7 +125,7 @@ class LinkedList {
      *
      * @return the first element data
      */
-    public int getFirst() {
+    public T peek() {
         return top.data;
     }
 
@@ -142,7 +133,7 @@ class LinkedList {
      * Checks if list is empty.
      *
      * @return true if list is empty
-     * false if list is not
+     *         false if list is not
      */
     public boolean isEmpty() {
         return top == null;
@@ -152,11 +143,11 @@ class LinkedList {
      * Display the contents of the linked list.
      */
     public void display() {
-        Node ptr = top; // Pointer to traverse the list.
+        Node<T> ptr = top; // Pointer to traverse the list.
 
         while (ptr != null) { // While not at the end of the list ...
-            int data = ptr.data; // Get data of current node.
-            System.out.println(data); // Print the data.
+            T data = ptr.data; // Get data of current node.
+            System.out.println(data); // PrT the data.
             ptr = ptr.next; // Move to the next node.
         }
 
@@ -171,10 +162,10 @@ class LinkedList {
     }
 
     /**
-     * Node Class.
+     * Node<T> Class.
      */
-    private class Node {
-        public int data; // Data stored in the Node.
-        public Node next; // Pointer to next Node in the list.
+    private class Node<T> {
+        public T data; // Data stored in the Node.
+        public Node<T> next; // Pointer to next Node<T> in the list.
     }
 }
