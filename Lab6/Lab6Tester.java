@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Tests the {@link AdjacencyList} and the use of Dijkstra's Algorithm, Breath
+ * Tests the {@link MyAdjacencyList} and the use of Dijkstra's Algorithm, Breath
  * First Search, and Depth First Search.
  *
  * @author Ben Goldstone
@@ -11,9 +11,10 @@ import java.util.Scanner;
  */
 public class Lab6Tester {
     static Scanner scan = new Scanner(System.in);
-    static AdjacencyList list;
+    static MyAdjacencyList list;
 
     public static void main(String[] args) {
+        list = new MyAdjacencyList(-1);
         String prompt = """
                   Graph Tester Menu
                   1. Find the shortest path
@@ -28,14 +29,15 @@ public class Lab6Tester {
             System.out.println();
             switch (choice) {
                 case '1':
+                    if (list.getNumberOfNodes() == -1) {
+                        System.out.println("No list loaded!");
+                        break;
+                    }
                     try {
                         System.out.print("What node number would you like to start with? ");
                         int startNode = Integer.parseInt(scan.nextLine());
                         System.out.println();
-                        if (list == null)
-                            System.out.println("List Is Empty!");
-                        else
-                            list.findShortestPath(startNode);
+                        list.findShortestPath(startNode);
                     } catch (NumberFormatException e) {
                         System.out.println("Data Type is not an Integer");
                     }
@@ -91,12 +93,13 @@ public class Lab6Tester {
             String[] firstLine = file.nextLine().split(" ");
             int numOfNodes = Integer.parseInt(firstLine[0]);
             int numOfEdges = Integer.parseInt(firstLine[1]);
-            list = new AdjacencyList(numOfNodes);
+            list = new MyAdjacencyList(numOfNodes);
             String[] current;
             for (int i = 0; i < numOfEdges; i++) {
                 current = file.nextLine().split(" ");
                 try {
-                    list.insert(Integer.parseInt(current[0]), Integer.parseInt(current[1]), Integer.parseInt(current[2]));
+                    list.insert(Integer.parseInt(current[0]), Integer.parseInt(current[1]),
+                            Integer.parseInt(current[2]));
                 } catch (StringIndexOutOfBoundsException e) {
                     System.out.println("String index out of bounds!");
                 }

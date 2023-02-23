@@ -6,23 +6,23 @@ import java.util.Arrays;
  * @author Ben Goldstone
  * @version 11/30/2021
  */
-public class AdjacencyList<T> {
+public class MyAdjacencyList {
 
     private final int numberOfNodes;
     private final GraphNode[] graphNodes;
 
     /**
-     * Constructor for a {@link AdjacencyList}.
+     * Constructor for a {@link MyAdjacencyList}.
      *
      * @param numberOfNodes number of Nodes in the AdjacencyList.
      */
-    public AdjacencyList(int numberOfNodes) {
+    public MyAdjacencyList(int numberOfNodes) {
         this.numberOfNodes = numberOfNodes;
         graphNodes = new GraphNode[numberOfNodes];
     }
 
     /**
-     * Inserts {@link GraphNode} into {@link AdjacencyList}.
+     * Inserts {@link GraphNode} into {@link MyAdjacencyList}.
      *
      * @param to     Where the Current Node points to.
      * @param from   The Current Node.
@@ -93,7 +93,7 @@ public class AdjacencyList<T> {
      */
     public void displayBFS() {
         int[] visited = new int[numberOfNodes];
-        Queue queue = new Queue(numberOfNodes);
+        MyQueue queue = new MyQueue(numberOfNodes);
         queue.enqueue(0);
         int current;
         GraphNode currentNode;
@@ -187,12 +187,17 @@ public class AdjacencyList<T> {
             System.out.println("Node Number: " + i + " distance from node " + startNode +
                     ": " + dijkstraArray[i][1] + " From Node: " + dijkstraArray[i][2]);
         }
+
+    }
+
+    public int getNumberOfNodes() {
+        return this.numberOfNodes;
     }
 
     /**
      * Creates an object of a GraphNode.
      */
-    static class GraphNode {
+    class GraphNode {
         int to;
         int weight;
         GraphNode next;

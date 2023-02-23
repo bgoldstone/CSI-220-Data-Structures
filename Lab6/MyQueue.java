@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author Ben Goldstone
  * @version 11/2/2021
  */
-public class Queue {
+public class MyQueue {
     private int[] queue;
     private int[] compare;
     private int size;
@@ -18,7 +18,7 @@ public class Queue {
      *
      * @param mySize size of queue
      */
-    public Queue(int mySize) {
+    public MyQueue(int mySize) {
         this.size = mySize;
         this.queue = new int[size];
         this.compare = new int[size];

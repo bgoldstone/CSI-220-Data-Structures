@@ -1,7 +1,7 @@
 
 public class QueueExample {
     public static void main(String[] args) {
-        Queue queue = new Queue(6);
+        MyQueue queue = new MyQueue(6);
     }
 
 }
