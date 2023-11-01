@@ -284,8 +284,9 @@ public class BinarySearchTree<T extends Comparable<T>> {
         if (x == null)
             return x;
         else {
+            Node swap;
             SwapTreeRecursive(x.left);
-            Node swap = x.left;
+            swap = x.left;
             x.left = x.right;
             x.right = swap;
             SwapTreeRecursive(x.right);
