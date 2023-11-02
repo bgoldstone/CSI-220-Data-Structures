@@ -64,7 +64,7 @@ public class MyQueue {
      * @return true if queue is empty.
      */
     public boolean isEmpty() {
-        return Arrays.compare(queue, new int[size]) == 0;
+        return rear == front;
     }
 
     /**
@@ -73,7 +73,8 @@ public class MyQueue {
      * @return true if queue is full.
      */
     public boolean isFull() {
-        if (isEmpty()) return false;
+        if (isEmpty())
+            return false;
         return (rear + 1) % size == front;
     }
 
