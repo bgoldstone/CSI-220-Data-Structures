@@ -284,22 +284,12 @@ public class BinarySearchTree<T extends Comparable<T>> {
     private Node SwapTreeRecursive(Node x) {
         if (x != null) {
             SwapTreeRecursive(x.left);
-            SwapLeftRight(x);
+            Node swap;
+            swap = x.left;
+            x.left = x.right;
+            x.right = swap;
             SwapTreeRecursive(x.right);
-            SwapLeftRight(x);
         }
         return x;
-    }
-
-    /**
-     * Swap Left and Right Nodes given Parent Node
-     * 
-     * @param x Parent Node
-     */
-    private void SwapLeftRight(Node x) {
-        Node swap;
-        swap = x.left;
-        x.left = x.right;
-        x.right = swap;
     }
 }
